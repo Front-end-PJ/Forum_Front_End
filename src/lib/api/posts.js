@@ -1,6 +1,6 @@
-import qs from 'qs';
-import client from './client';
-
+import qs from "qs";
+import client from "./client";
+import axios from "axios";
 // 게시판 목록 불러오기
 export const getBoard = (posts) => (posts = client.get(`/board`));
 
@@ -11,8 +11,8 @@ export const writePost = ({ title, pk, content }) => {
     pk,
     content,
   });
-  console.log('postitem', queryString);
-  return client.post('/post', queryString);
+  console.log("postitem", queryString);
+  return client.post("/post", queryString);
 };
 
 // 댓글 쓰기
@@ -21,8 +21,24 @@ export const writeCommnet = ({ pk, content }) => {
     pk,
     content,
   });
-  console.log(('query', queryString));
-  return client.post('/reply', queryString);
+  console.log(("query", queryString));
+  return client.post("/reply", queryString);
+};
+// 댓글 삭제하기
+export const deleteComment = ({ pk }) => {
+  const queryString = qs.stringify({ pk });
+  console.log("hajsdfhajsdf", pk);
+  return client.delete("/reply", {
+    data: queryString,
+  });
+  // return client.delete("/reply", queryString);
+};
+
+// 글 삭제하기
+export const deletePost = ({ pk }) => {
+  const queryString = qs.stringify({ pk });
+
+  return client.delete("/reply", queryString);
 };
 
 export const writeReCommnet = ({ pk, content }) => {
@@ -31,14 +47,6 @@ export const writeReCommnet = ({ pk, content }) => {
     content,
   });
   return client.post(`/answer_reply?pk=${pk}`, queryString);
-};
-
-// 댓글 삭제하기
-export const deleteComment = () => {
-  let pk = 1;
-  const queryString = qs.stringify({ pk });
-  console.log('hajsdfhajsdf', pk);
-  return client.delete('/reply', queryString);
 };
 
 // 댓글 읽어오기
