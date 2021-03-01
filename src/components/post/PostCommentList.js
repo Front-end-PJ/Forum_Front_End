@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import PostCommentItem from './PostCommentItem';
-import palette from '../../lib/styles/palette';
-import Responsive from '../common/Responsive';
-import { stringify } from 'qs';
+import React, { useState } from "react";
+import styled from "styled-components";
+import PostCommentItem from "./PostCommentItem";
+import palette from "../../lib/styles/palette";
+import Responsive from "../common/Responsive";
+import { stringify } from "qs";
 const Input = styled.input`
   resize: none;
   padding: 1rem 1rem 1.5rem;
@@ -60,12 +60,15 @@ const PostCommentList = ({
   onReadComment,
   ownComment,
 }) => {
-  const [content, setText] = useState('');
+  const [content, setText] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
-
+    if (content === "") {
+      alert("내용을 입력해주세요!");
+      return;
+    }
     onPublish({ content });
-    setText('');
+    setText("");
   };
   const onChange = (e) => {
     setText(e.target.value);
@@ -80,7 +83,7 @@ const PostCommentList = ({
             placeholder="댓글을 입력하세요"
             onChange={onChange}
           />
-          <Button cyan type={'submit'}>
+          <Button cyan type={"submit"}>
             등록
           </Button>
         </form>
@@ -88,7 +91,7 @@ const PostCommentList = ({
         <br />
 
         <div>
-          {console.log('data: ', data)}
+          {console.log("data: ", data)}
           {data.map((comment) => (
             <PostCommentItem
               key={comment.pk}
