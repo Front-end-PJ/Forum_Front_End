@@ -37,7 +37,6 @@ export const deleteComment = ({ pk }) => {
 // 글 삭제하기
 export const deletePost = ({ pk }) => {
   const queryString = qs.stringify({ pk });
-
   return client.delete("/post", { data: queryString });
 };
 
@@ -65,5 +64,3 @@ export const updatePost = ({ id, title, body, tags }) =>
     body,
     tags,
   });
-
-export const removePost = (id) => client.delete(`/api/posts/${id}`);

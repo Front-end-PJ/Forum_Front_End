@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import styled from 'styled-components';
-import palatte from '../../lib/styles/palette';
-import AskRemoveModal from './AskRemoveModal';
+import React, { useState, useCallback } from "react";
+import styled from "styled-components";
+import palatte from "../../lib/styles/palette";
+import AskRemoveModal from "./AskRemoveModal";
 
 const PostActionButtonBlock = styled.div`
   display: flex;
@@ -37,13 +37,11 @@ const PostActionButtons = ({ onEdit, onRemove, check }) => {
   };
   const onConfirm = () => {
     setModal(false);
-
     onRemove();
   };
 
   return (
     <>
-      {console.log('hihihi', check)}
       {check && (
         <>
           <PostActionButtonBlock>

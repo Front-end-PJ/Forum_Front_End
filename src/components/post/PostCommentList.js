@@ -91,7 +91,6 @@ const PostCommentList = ({
         <br />
 
         <div>
-          {console.log("data: ", data)}
           {data.map((comment) => (
             <PostCommentItem
               key={comment.pk}
