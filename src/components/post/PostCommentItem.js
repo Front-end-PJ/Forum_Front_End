@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import palatte from '../../lib/styles/palette';
-import PostCommentToggle from './PostCommentToggle';
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import { withRouter, Redirect } from "react-dom";
+import palatte from "../../lib/styles/palette";
+import PostCommentToggle from "./PostCommentToggle";
+// import { deleteComment } from "../../modules/comment";
+import { deleteComment } from "../../lib/api/posts";
 const CommentBlock = styled.span`
   display: flex;
   justify-content: flex-start;
@@ -57,27 +59,37 @@ const PostCommentItem = ({
   onWriteRecomment,
   onReadComment,
   ownComment,
+  history,
 }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [edit, setEdit] = useState(false);
-
+  const [out, setOut] = useState(false);
+  console.log("comment", comment);
+  const { post } = comment.fields;
   const { pk } = comment;
   const onChange = (e) => {
     setText(e.target.value);
   };
-  const onRemoveComment = () => {
-    console.log('pk값은', pk);
-    onRemove({ pk });
+  const onRemoveComment = async () => {
+    try {
+      await deleteComment({ pk });
+      setOut(true);
+    } catch (e) {
+      console.log(e);
+    }
   };
+  // const onRemoveComment = (async) => {
+  //   console.log("pk값은", pk);
+  // };
   const onSumbit = (e) => {
     e.preventDefault();
     // 내용이 비어있을 경우 경고 표시
-    if (text === '') {
-      alert('내용을 입력해주세요!');
+    if (text === "") {
+      alert("내용을 입력해주세요!");
       return;
     }
 
-    setText('');
+    setText("");
     setEdit(!edit);
   };
 
@@ -86,62 +98,66 @@ const PostCommentItem = ({
 
   const { writeAt, content } = comment.fields;
 
-  const postDate = writeAt.split('T');
+  const postDate = writeAt.split("T");
   return (
     <>
-      <div>
-        {/* 댓글 정보 */}
-        <span>
-          Date: {postDate[0]} username: {username}
-        </span>
-        <hr />
-        {/* 댓글 수정 부 form 으로 구현  */}
-        {edit && (
-          <form onSubmit={onSumbit}>
-            <Input value={text} onChange={onChange}></Input>
-            <CommentBlock>
-              <div>
-                <ActionButton type={'submit'}>등록</ActionButton>
-                <ActionButton>취소</ActionButton>
-              </div>
-            </CommentBlock>
-          </form>
-        )}
-        {edit || (
-          <div>
-            <CommentBlock>{content}</CommentBlock>
-            {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
-            {ownThing ? (
-              <>
-                <CommentBlock>
-                  <div>
-                    <ActionButton
-                      onClick={() => {
-                        setEdit(!edit);
-                      }}
-                    >
-                      수정
-                    </ActionButton>
-                    <ActionButton onClick={onRemoveComment}>삭제</ActionButton>
-                  </div>
-                </CommentBlock>
-              </>
-            ) : (
-              <div>&nbsp;&nbsp;</div>
-            )}
-          </div>
-        )}
+      {out || (
+        <div>
+          {/* 댓글 정보 */}
+          <span>
+            Date: {postDate[0]} username: {username}
+          </span>
+          <hr />
+          {/* 댓글 수정 부 form 으로 구현  */}
+          {edit && (
+            <form onSubmit={onSumbit}>
+              <Input value={text} onChange={onChange}></Input>
+              <CommentBlock>
+                <div>
+                  <ActionButton type={"submit"}>등록</ActionButton>
+                  <ActionButton>취소</ActionButton>
+                </div>
+              </CommentBlock>
+            </form>
+          )}
+          {edit || (
+            <div>
+              <CommentBlock>{content}</CommentBlock>
+              {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
+              {ownThing ? (
+                <>
+                  <CommentBlock>
+                    <div>
+                      <ActionButton
+                        onClick={() => {
+                          setEdit(!edit);
+                        }}
+                      >
+                        수정
+                      </ActionButton>
+                      <ActionButton onClick={onRemoveComment}>
+                        삭제
+                      </ActionButton>
+                    </div>
+                  </CommentBlock>
+                </>
+              ) : (
+                <div>&nbsp;&nbsp;</div>
+              )}
+            </div>
+          )}
 
-        <PostCommentToggle
-          comment={comment}
-          onClickRe={onClickRe}
-          recommentdata={recommentdata}
-          onWriteRecomment={onWriteRecomment}
-          onReadComment={onReadComment}
-          user={user}
-        />
-        <br />
-      </div>
+          <PostCommentToggle
+            comment={comment}
+            onClickRe={onClickRe}
+            recommentdata={recommentdata}
+            onWriteRecomment={onWriteRecomment}
+            onReadComment={onReadComment}
+            user={user}
+          />
+          <br />
+        </div>
+      )}
     </>
   );
 };

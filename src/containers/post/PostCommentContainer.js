@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   deleteComment,
   readComment,
   unloadComment,
   readRecomment,
-} from '../../modules/comment';
-import PostCommentList from '../../components/post/PostCommentList';
-import { withRouter } from 'react-router-dom';
+} from "../../modules/comment";
+import PostCommentList from "../../components/post/PostCommentList";
+import { withRouter } from "react-router-dom";
 import {
   initialize,
   writeComment,
   writeReComment,
-} from '../../modules/commentwrite';
+} from "../../modules/commentwrite";
 const PostCommentContainer = ({ match }) => {
   const [check, onCheck] = useState(false);
   const { postId } = match.params;
@@ -24,7 +24,7 @@ const PostCommentContainer = ({ match }) => {
       content: commentwrite.content,
       pk: postId,
       recommentdata: comment.recommentdata,
-    }),
+    })
   );
 
   const dispatch = useDispatch();
@@ -63,12 +63,13 @@ const PostCommentContainer = ({ match }) => {
   // 대댓글 읽어오기
   const onClickRe = ({ id }) => {
     dispatch(readRecomment(id));
+    dispatch(readComment(id));
   };
   // // 댓글 삭제하기
   // let is = 'hihi';
   const onRemove = ({ pk }) => {
-    console.log('댓글 삭제 pk:', pk);
-    dispatch(deleteComment(pk));
+    console.log("댓글 삭제 pk:", pk);
+    dispatch(deleteComment({ pk }));
   };
 
   const ownComment = (postId) => {
