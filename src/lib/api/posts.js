@@ -38,7 +38,7 @@ export const deleteComment = ({ pk }) => {
 export const deletePost = ({ pk }) => {
   const queryString = qs.stringify({ pk });
 
-  return client.delete("/reply", queryString);
+  return client.delete("/post", { data: queryString });
 };
 
 export const writeReCommnet = ({ pk, content }) => {
