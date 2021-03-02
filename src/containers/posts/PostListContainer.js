@@ -60,6 +60,7 @@ const PostListContainer = ({ match, history, location }) => {
       posts={posts}
       data={data}
       post={post}
+      user={user}
       postsdata={postsdata}
       showWriteButton={user}
     />

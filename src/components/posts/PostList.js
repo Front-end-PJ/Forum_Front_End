@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import Responsive from '../common/Responsive';
-import Button from '../common/Button';
-import palette from '../../lib/styles/palette';
-import SubInfo from '../common/SubInfo';
-import Tags from '../common/Tags';
-import { Link, withRouter } from 'react-router-dom';
-import { readPost } from '../../modules/post';
+import React from "react";
+import styled from "styled-components";
+import Responsive from "../common/Responsive";
+import Button from "../common/Button";
+import palette from "../../lib/styles/palette";
+import SubInfo from "../common/SubInfo";
+import Tags from "../common/Tags";
+import { Link, withRouter } from "react-router-dom";
+import { readPost } from "../../modules/post";
 
 const PostListBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -102,7 +102,7 @@ const PostItem = ({ post }) => {
 
   const { title, content, writeAt, board } = post.fields;
 
-  const postDate = writeAt.split('T');
+  const postDate = writeAt.split("T");
 
   return (
     <PostItemBlock>
@@ -131,6 +131,7 @@ const PostList = ({
   postsdata,
   postId,
   post,
+  user,
 }) => {
   // 에러 발생 시
   if (error) {
@@ -139,7 +140,7 @@ const PostList = ({
   // if (postId === undefined) {
   //   return (postId = 1);
   // }
-  const _postId = parseInt(localStorage.getItem('postId'));
+  const _postId = parseInt(localStorage.getItem("postId"));
   return (
     <BoardItemBlock>
       {/* <SideBlock>
@@ -155,15 +156,11 @@ const PostList = ({
       </SideBlock> */}
       <PostListBlock>
         <WritePostButtonWrapper>
-          {showWriteButton && postId ? (
+          {showWriteButton && user ? (
             <Button cyan to={`/write/${postId}`}>
               새 글 작성하기
             </Button>
-          ) : (
-            <Button cyan to={`/write/${_postId}`}>
-              새 글 작성하기
-            </Button>
-          )}
+          ) : null}
         </WritePostButtonWrapper>
         {/*  로딩 중 아니고, 포스트 배열이 존재할 때만 보여줌 */}
 
