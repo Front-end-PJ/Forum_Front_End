@@ -1,6 +1,5 @@
 import qs from "qs";
 import client from "./client";
-import axios from "axios";
 // 게시판 목록 불러오기
 export const getBoard = (posts) => (posts = client.get(`/board`));
 
@@ -25,6 +24,15 @@ export const writeCommnet = ({ pk, content }) => {
   return client.post("/reply", queryString);
 };
 
+// 글 수정하기
+export const updatePost = ({ pk, content }) => {
+  const queryString = qs.stringify({
+    pk,
+    content,
+  });
+  return client.post("/post", queryString);
+};
+
 // 댓글 수정하기
 export const changeComment = ({ pk, content }) => {
   const queryString = qs.stringify({
@@ -33,7 +41,7 @@ export const changeComment = ({ pk, content }) => {
   });
   return client.put("/reply", queryString);
 };
-
+// 대댓글 수정하기
 export const changeReComment = ({ pk, content }) => {
   const qeryString = qs.stringify({
     pk,
@@ -79,11 +87,3 @@ export const readRecoment = (id) => client.get(`/answer_reply?pk=${id}`);
 
 // 글 읽어오기
 export const readPost = (id) => client.get(`/post?pk=${id}`);
-
-// 글 수정하기
-export const updatePost = ({ id, title, body, tags }) =>
-  client.patch(`/api/posts/${id}`, {
-    title,
-    body,
-    tags,
-  });

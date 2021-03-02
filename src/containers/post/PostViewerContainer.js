@@ -4,8 +4,9 @@ import { withRouter } from "react-router-dom";
 import { readPost, unloadPost } from "../../modules/post";
 import PostViewer from "../../components/post/PostViewer";
 import PostActionButtons from "../../components/post/PostActionButtons";
-import { setOriginalPost } from "../../modules/write";
+import { setOriginalPost, updatePost } from "../../modules/write";
 import { deletePost } from "../../lib/api/posts";
+import { listPosts } from "../../modules/posts";
 
 const PostViewerContainer = ({ match, history }) => {
   // 처음 마운트될 때 포스트 읽기 API 요청
@@ -38,11 +39,11 @@ const PostViewerContainer = ({ match, history }) => {
     };
   }, [dispatch, _postId]);
 
-  const onEdit = () => {
-    dispatch(setOriginalPost(post));
+  const onEdit = ({ title, pk, content }) => {
+    dispatch(setOriginalPost({ title, pk, content }));
     history.push("/write");
   };
-
+  // 게시물 삭제
   const onRemove = async () => {
     try {
       let pk = postId;
@@ -52,11 +53,15 @@ const PostViewerContainer = ({ match, history }) => {
       console.log(e);
     }
   };
-
+  // 수정 삭제 (id 확인)
   const ownPost = (PostId) => {
     if (PostId === user) {
       onCheck(true);
     }
+  };
+  const onUpdatePost = ({ pk, content }) => {
+    dispatch(updatePost({ pk, content }));
+    dispatch(dispatch(listPosts(postId)));
   };
 
   // const ownPost = (user) === (post && postsdata.user._id);
@@ -74,7 +79,9 @@ const PostViewerContainer = ({ match, history }) => {
         ownPost={ownPost}
         actionButtons={
           <PostActionButtons
+            postsdata={postsdata}
             onEdit={onEdit}
+            onUpdatePost={onUpdatePost}
             onRemove={onRemove}
             check={check}
           />

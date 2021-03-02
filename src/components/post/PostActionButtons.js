@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import palatte from "../../lib/styles/palette";
 import AskRemoveModal from "./AskRemoveModal";
-
+import { withRouter } from "react-router-dom";
 const PostActionButtonBlock = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -27,7 +27,7 @@ const ActionButton = styled.div`
     margin-left: 0.25rem;
   }
 `;
-const PostActionButtons = ({ onEdit, onRemove, check }) => {
+const PostActionButtons = ({ onEdit, onRemove, check, postsdata, match }) => {
   const [modal, setModal] = useState(false);
   const onRemoveClick = () => {
     setModal(true);
@@ -39,13 +39,22 @@ const PostActionButtons = ({ onEdit, onRemove, check }) => {
     setModal(false);
     onRemove();
   };
+  const { postId } = match.params;
+  const new_data = postsdata.find((x) => x.pk === parseInt(postId, 10));
+
+  const { title, content } = new_data.fields;
+  const { pk } = new_data;
+
+  const onEditThing = () => {
+    onEdit({ title, pk, content });
+  };
 
   return (
     <>
       {check && (
         <>
           <PostActionButtonBlock>
-            <ActionButton onClick={onEdit}>수정</ActionButton>
+            <ActionButton onClick={onEditThing}>수정</ActionButton>
             <ActionButton onClick={onRemoveClick}>삭제</ActionButton>
           </PostActionButtonBlock>
           <AskRemoveModal
@@ -59,4 +68,4 @@ const PostActionButtons = ({ onEdit, onRemove, check }) => {
   );
 };
 
-export default PostActionButtons;
+export default withRouter(PostActionButtons);

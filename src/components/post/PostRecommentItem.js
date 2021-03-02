@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { deleteRecomment } from "../../lib/api/posts";
 import palette from "../../lib/styles/palette";
-const RecommentBlock = styled.div``;
 
 const ReCommentBlock = styled.span`
   display: flex;
@@ -19,22 +16,7 @@ const ReCommentBlock = styled.span`
     margin-bottom: 2rem;
   }
 `;
-const Button = styled.button`
-  border: none;
-  width: 100%;
-  border-radius: 4px;
-  margin-bottom: 2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0.25rem 1rem;
-  color: white;
-  outline: none;
-  cursor: pointer;
-  background: ${palette.cyan[5]};
-  &:hover {
-    background: ${palette.cyan[4]};
-  }
-`;
+
 const ActionButton = styled.button`
   display: flex;
   justify-content: flex-end;
@@ -81,7 +63,6 @@ const PostRecommentItem = ({
   // username 불러오기
   const { username } = recomment.fields.author.fields;
   const { pk } = recomment;
-
   const [text, setText] = useState("");
   const [edit, setEdit] = useState(false);
   const [out, setOut] = useState(false);
@@ -120,7 +101,6 @@ const PostRecommentItem = ({
   };
   return (
     <>
-      {/* <AiOutlineArrowRight className="box"></AiOutlineArrowRight> */}
       {out || (
         <div>
           {/* 댓글 정보 */}
