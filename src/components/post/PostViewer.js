@@ -1,9 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
-import Responsive from '../common/Responsive';
-import SubInfo from '../common/SubInfo';
-import Tags from '../common/Tags';
+import React, { useState } from "react";
+import styled from "styled-components";
+import palette from "../../lib/styles/palette";
+import Responsive from "../common/Responsive";
+import { withRouter } from "react-router-dom";
+import SubInfo from "../common/SubInfo";
+import Tags from "../common/Tags";
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
@@ -46,7 +47,9 @@ const PostViewer = ({
   postId,
   postsdata,
   ownPost,
+  match,
 }) => {
+  const [set, onSet] = useState(false);
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -59,14 +62,27 @@ const PostViewer = ({
   }
 
   // 로딩중이거나, 아직 포스트 데이터가 없을 시
-  if (loading || !postsdata) {
+  if (loading) {
     return null;
   }
-  const new_id = postId - 1;
-  const { title, content, writeAt } = postsdata[new_id].fields;
-  const { reply_length } = postsdata[new_id];
-  ownPost(postsdata[postId - 1].fields.author.fields.username);
-  console.log('hi', postsdata[postId - 1].fields.author.fields.username);
+
+  const _postId = parseInt(postId, 10);
+  // postsdata 배열에서 주소와 일치하는 post 찾기
+  let _data =
+    postsdata &&
+    postsdata.find((x) => {
+      return x.pk === _postId;
+    });
+  // redirecting(새로고침)에서 데이터 사라짐 방지용 localStorage 저장
+  if (_data !== null) {
+    localStorage.setItem("data", JSON.stringify(_data));
+  } else {
+    _data = JSON.parse(localStorage.getItem("data"));
+  }
+  const { title, content, writeAt } = _data.fields;
+  const { reply_length } = _data;
+  ownPost(_data.fields.author.fields.username);
+
   return (
     <PostViewerBlock>
       <PostHead>
@@ -86,4 +102,4 @@ const PostViewer = ({
   );
 };
 
-export default PostViewer;
+export default withRouter(PostViewer);

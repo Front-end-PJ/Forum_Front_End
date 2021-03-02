@@ -66,11 +66,11 @@ const PostViewerContainer = ({ match, history }) => {
     <>
       <PostViewer
         post={post}
+        postsdata={postsdata}
         loading={loading}
         error={error}
         data={data}
         postId={postId}
-        postsdata={postsdata}
         ownPost={ownPost}
         actionButtons={
           <PostActionButtons

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { AiOutlineArrowRight } from 'react-icons/ai';
-import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
+import React, { useState } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { withRouter } from "react-router-dom";
+import styled from "styled-components";
+import { deleteRecomment } from "../../lib/api/posts";
+import palette from "../../lib/styles/palette";
 const RecommentBlock = styled.div``;
 
 const ReCommentBlock = styled.span`
@@ -69,9 +71,9 @@ const Input = styled.input`
 
 const PostRecommentItem = ({ recomment, onRecomment, user }) => {
   const { id } = recomment;
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [edit, setEdit] = useState(false);
-
+  console.log("data", recomment);
   const onChange = (e) => {
     setText(e.target.value);
   };
@@ -79,26 +81,31 @@ const PostRecommentItem = ({ recomment, onRecomment, user }) => {
   const onSumbit = (e) => {
     e.preventDefault();
     // 내용이 비어있을 경우 경고 표시
-    if (text === '') {
-      alert('내용을 입력해주세요!');
+    if (text === "") {
+      alert("내용을 입력해주세요!");
       return;
     }
 
-    setText('');
+    setText("");
     setEdit(!edit);
   };
   // username 불러오기
   const { username } = recomment.fields.author.fields;
+  const { pk } = recomment;
+  console.log("pk 값은", pk);
   // 자신이 쓴 대댓글인지 확인
   const ownRecomment = user === username;
-  console.log('this is own', ownRecomment);
+  console.log("this is own", ownRecomment);
   const { writeAt, content } = recomment.fields;
-  const postDate = writeAt.split('T');
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   onRecomment(id, text);
-  //   setText('');
-  // };
+  const postDate = writeAt.split("T");
+  // 대댓글 삭제
+  const onRemove = async () => {
+    try {
+      deleteRecomment({ pk });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
       {console.log(recomment)}
@@ -114,7 +121,7 @@ const PostRecommentItem = ({ recomment, onRecomment, user }) => {
           <form onSubmit={onSumbit}>
             <Input value={text} onChange={onChange}></Input>
             <ReCommentBlock>
-              <ActionButton type={'submit'}>등록</ActionButton>
+              <ActionButton type={"submit"}>등록</ActionButton>
               <ActionButton>취소</ActionButton>
             </ReCommentBlock>
           </form>
@@ -134,7 +141,7 @@ const PostRecommentItem = ({ recomment, onRecomment, user }) => {
                     >
                       수정
                     </ActionButton>
-                    <ActionButton>삭제</ActionButton>
+                    <ActionButton onClick={onRemove}>삭제</ActionButton>
                   </div>
                 </ReCommentBlock>
               </>

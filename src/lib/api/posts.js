@@ -34,6 +34,11 @@ export const deleteComment = ({ pk }) => {
   // return client.delete("/reply", queryString);
 };
 
+export const deleteRecomment = ({ pk }) => {
+  const queryString = qs.stringify({ pk });
+  return client.delete("/answer_reply", { data: queryString });
+};
+
 // 글 삭제하기
 export const deletePost = ({ pk }) => {
   const queryString = qs.stringify({ pk });
