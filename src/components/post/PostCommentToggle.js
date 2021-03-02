@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
-import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
-import PostRecommentItem from './PostRecommentItem';
+import React, { useState } from "react";
+import { AiOutlinePlusSquare, AiOutlineMinusSquare } from "react-icons/ai";
+import styled from "styled-components";
+import palette from "../../lib/styles/palette";
+import PostRecommentItem from "./PostRecommentItem";
 const ToggleButton = styled.div`
   display: block;
   align-items: center;
@@ -91,6 +91,7 @@ const PostCommentToggle = ({
   recommentdata,
   onWriteRecomment,
   onReadComment,
+  onChangeReComment,
   user,
 }) => {
   const { pk } = comment;
@@ -98,18 +99,18 @@ const PostCommentToggle = ({
   // const { id } = comment.recomments;
   const [set, onSet] = useState(false);
   const [setRe, onSetRe] = useState(false);
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
     onRecomment(text);
-    setText('');
+    setText("");
   };
   const onSubmitRe = (e) => {
     e.preventDefault();
     const content = text;
     onWriteRecomment({ pk, content });
-    setText('');
+    setText("");
   };
   const onChange = (e) => {
     setText(e.target.value);
@@ -169,8 +170,7 @@ const PostCommentToggle = ({
             placeholder="답글을 입력하세요"
             onChange={onChange}
           ></Input>
-          <Button type={'submit'} onClick={onRead}>
-            {console.log('대댓글 개수 :', comment)}
+          <Button type={"submit"} onClick={onRead}>
             등록
           </Button>
         </form>
@@ -183,12 +183,13 @@ const PostCommentToggle = ({
                 key={recomment.pk}
                 recomment={recomment}
                 user={user}
+                onChangeReComment={onChangeReComment}
               ></PostRecommentItem>
             ))}
           </RecommentBlock>
           {user && (
             <Button2 onClick={onClick2}>
-              {setRe ? '숨기기' : '답글달기'}
+              {setRe ? "숨기기" : "답글달기"}
             </Button2>
           )}
           {setRe && (
@@ -199,7 +200,7 @@ const PostCommentToggle = ({
                 placeholder="답글을 입력하세요"
                 onChange={onChange}
               ></Input>
-              <Button type={'submit'}>등록</Button>
+              <Button type={"submit"}>등록</Button>
             </form>
           )}
         </>

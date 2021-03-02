@@ -4,7 +4,7 @@ import { withRouter, Redirect } from "react-dom";
 import palatte from "../../lib/styles/palette";
 import PostCommentToggle from "./PostCommentToggle";
 // import { deleteComment } from "../../modules/comment";
-import { deleteComment } from "../../lib/api/posts";
+import { changeComment, deleteComment, readComment } from "../../lib/api/posts";
 const CommentBlock = styled.span`
   display: flex;
   justify-content: flex-start;
@@ -60,12 +60,16 @@ const PostCommentItem = ({
   onReadComment,
   ownComment,
   history,
+  onChangeComment,
+  onChangeReComment,
 }) => {
   const [text, setText] = useState("");
   const [edit, setEdit] = useState(false);
   const [out, setOut] = useState(false);
-  console.log("comment", comment);
-  const { post } = comment.fields;
+  const [redirect, setRedirect] = useState("");
+  const { writeAt, content } = comment.fields;
+  const { username } = comment.fields.author.fields;
+
   const { pk } = comment;
   const onChange = (e) => {
     setText(e.target.value);
@@ -78,9 +82,10 @@ const PostCommentItem = ({
       console.log(e);
     }
   };
-  // const onRemoveComment = (async) => {
-  //   console.log("pk값은", pk);
-  // };
+  const onChangeComments = () => {
+    const content = text;
+    onChangeComment({ pk, content });
+  };
   const onSumbit = (e) => {
     e.preventDefault();
     // 내용이 비어있을 경우 경고 표시
@@ -88,15 +93,12 @@ const PostCommentItem = ({
       alert("내용을 입력해주세요!");
       return;
     }
-
+    onChangeComments();
     setText("");
     setEdit(!edit);
   };
 
-  const { username } = comment.fields.author.fields;
   const ownThing = ownComment(username);
-
-  const { writeAt, content } = comment.fields;
 
   const postDate = writeAt.split("T");
   return (
@@ -115,14 +117,16 @@ const PostCommentItem = ({
               <CommentBlock>
                 <div>
                   <ActionButton type={"submit"}>등록</ActionButton>
-                  <ActionButton>취소</ActionButton>
+                  <ActionButton onClick={() => setEdit(!edit)}>
+                    취소
+                  </ActionButton>
                 </div>
               </CommentBlock>
             </form>
           )}
           {edit || (
             <div>
-              <CommentBlock>{content}</CommentBlock>
+              <CommentBlock>{redirect ? content : content}</CommentBlock>
               {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
               {ownThing ? (
                 <>
@@ -131,6 +135,7 @@ const PostCommentItem = ({
                       <ActionButton
                         onClick={() => {
                           setEdit(!edit);
+                          setText(content);
                         }}
                       >
                         수정
@@ -154,6 +159,7 @@ const PostCommentItem = ({
             onWriteRecomment={onWriteRecomment}
             onReadComment={onReadComment}
             user={user}
+            onChangeReComment={onChangeReComment}
           />
           <br />
         </div>

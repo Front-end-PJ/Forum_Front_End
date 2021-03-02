@@ -36,6 +36,8 @@ const Button = styled.button`
   }
 `;
 const ActionButton = styled.button`
+  display: flex;
+  justify-content: flex-end;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   color: ${palette.gray[6]};
@@ -69,11 +71,21 @@ const Input = styled.input`
   line-height: 1.75;
 `;
 
-const PostRecommentItem = ({ recomment, onRecomment, user }) => {
-  const { id } = recomment;
+const PostRecommentItem = ({
+  recomment,
+  onRecomment,
+  user,
+  onChangeReComment,
+}) => {
+  const { reply } = recomment.fields;
+  // username 불러오기
+  const { username } = recomment.fields.author.fields;
+  const { pk } = recomment;
+
   const [text, setText] = useState("");
   const [edit, setEdit] = useState(false);
-  console.log("data", recomment);
+  const [out, setOut] = useState(false);
+
   const onChange = (e) => {
     setText(e.target.value);
   };
@@ -85,72 +97,74 @@ const PostRecommentItem = ({ recomment, onRecomment, user }) => {
       alert("내용을 입력해주세요!");
       return;
     }
-
+    const content = text;
+    const recomment_pk = reply;
+    onChangeReComment({ pk, content, recomment_pk });
     setText("");
     setEdit(!edit);
   };
-  // username 불러오기
-  const { username } = recomment.fields.author.fields;
-  const { pk } = recomment;
-  console.log("pk 값은", pk);
+
   // 자신이 쓴 대댓글인지 확인
   const ownRecomment = user === username;
-  console.log("this is own", ownRecomment);
+
   const { writeAt, content } = recomment.fields;
   const postDate = writeAt.split("T");
   // 대댓글 삭제
   const onRemove = async () => {
     try {
       deleteRecomment({ pk });
+      setOut(true);
     } catch (e) {
       console.log(e);
     }
   };
   return (
     <>
-      {console.log(recomment)}
       {/* <AiOutlineArrowRight className="box"></AiOutlineArrowRight> */}
-      <div>
-        {/* 댓글 정보 */}
-        <span>
-          Date: {postDate[0]} username: {username}
-        </span>
-        <hr />
-        {/* 댓글 수정 부 form 으로 구현  */}
-        {edit && (
-          <form onSubmit={onSumbit}>
-            <Input value={text} onChange={onChange}></Input>
-            <ReCommentBlock>
-              <ActionButton type={"submit"}>등록</ActionButton>
-              <ActionButton>취소</ActionButton>
-            </ReCommentBlock>
-          </form>
-        )}
-        {edit || (
-          <div>
-            <ReCommentBlock>{content}</ReCommentBlock>
-            {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
-            {ownRecomment ? (
-              <>
-                <ReCommentBlock>
-                  <div>
-                    <ActionButton
-                      onClick={() => {
-                        setEdit(!edit);
-                      }}
-                    >
-                      수정
-                    </ActionButton>
-                    <ActionButton onClick={onRemove}>삭제</ActionButton>
-                  </div>
-                </ReCommentBlock>
-              </>
-            ) : (
-              <div>&nbsp;&nbsp;</div>
-            )}
-          </div>
-        )}
-      </div>
+      {out || (
+        <div>
+          {/* 댓글 정보 */}
+          <span>
+            Date: {postDate[0]} username: {username}
+          </span>
+          <hr />
+          {/* 댓글 수정 부 form 으로 구현  */}
+          {edit && (
+            <form onSubmit={onSumbit}>
+              <Input value={text} onChange={onChange}></Input>
+              <ReCommentBlock>
+                <ActionButton type={"submit"}>등록</ActionButton>
+                <ActionButton onClick={() => setEdit(!edit)}>취소</ActionButton>
+              </ReCommentBlock>
+            </form>
+          )}
+          {edit || (
+            <div>
+              <ReCommentBlock>{content}</ReCommentBlock>
+              {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
+              {ownRecomment ? (
+                <>
+                  <ReCommentBlock>
+                    <div>
+                      <ActionButton
+                        onClick={() => {
+                          setEdit(!edit);
+                          setText(content);
+                        }}
+                      >
+                        수정
+                      </ActionButton>
+                      <ActionButton onClick={onRemove}>삭제</ActionButton>
+                    </div>
+                  </ReCommentBlock>
+                </>
+              ) : (
+                <div>&nbsp;&nbsp;</div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };

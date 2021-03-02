@@ -24,6 +24,24 @@ export const writeCommnet = ({ pk, content }) => {
   console.log(("query", queryString));
   return client.post("/reply", queryString);
 };
+
+// 댓글 수정하기
+export const changeComment = ({ pk, content }) => {
+  const queryString = qs.stringify({
+    pk,
+    content,
+  });
+  return client.put("/reply", queryString);
+};
+
+export const changeReComment = ({ pk, content }) => {
+  const qeryString = qs.stringify({
+    pk,
+    content,
+  });
+  return client.put("/answer_reply", qeryString);
+};
+
 // 댓글 삭제하기
 export const deleteComment = ({ pk }) => {
   const queryString = qs.stringify({ pk });

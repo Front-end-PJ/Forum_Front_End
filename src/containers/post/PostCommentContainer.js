@@ -5,6 +5,8 @@ import {
   readComment,
   unloadComment,
   readRecomment,
+  changeComment,
+  changeReComment,
 } from "../../modules/comment";
 import PostCommentList from "../../components/post/PostCommentList";
 import { withRouter } from "react-router-dom";
@@ -13,6 +15,7 @@ import {
   writeComment,
   writeReComment,
 } from "../../modules/commentwrite";
+
 const PostCommentContainer = ({ match }) => {
   const [check, onCheck] = useState(false);
   const { postId } = match.params;
@@ -71,14 +74,24 @@ const PostCommentContainer = ({ match }) => {
     console.log("댓글 삭제 pk:", pk);
     dispatch(deleteComment({ pk }));
   };
-
+  // 작성자 게시물 확인하기
   const ownComment = (postId) => {
     if (postId === user) {
       onCheck(true);
       return true;
     }
   };
-
+  // 댓글 수정하기
+  const onChangeComment = ({ pk, content }) => {
+    dispatch(changeComment({ pk, content }));
+    dispatch(readComment(postId));
+    dispatch(readComment(postId));
+  };
+  const onChangeReComment = ({ pk, content, recomment_pk }) => {
+    dispatch(changeReComment({ pk, content }));
+    dispatch(readRecomment(recomment_pk));
+    dispatch(readRecomment(recomment_pk));
+  };
   return (
     <PostCommentList
       comment={comment}
@@ -93,6 +106,8 @@ const PostCommentContainer = ({ match }) => {
       onWriteRecomment={onWriteRecomment}
       onClickRe={onClickRe}
       ownComment={ownComment}
+      onChangeComment={onChangeComment}
+      onChangeReComment={onChangeReComment}
     ></PostCommentList>
   );
 };
