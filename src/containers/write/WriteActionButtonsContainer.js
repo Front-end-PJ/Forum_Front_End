@@ -7,7 +7,7 @@ import { listPosts } from "../../modules/posts";
 
 const WriteActionButtonsContainer = ({ history, match }) => {
   const { postId } = match.params;
-  console.log(("id aaaa", postId));
+
   const dispatch = useDispatch();
   const {
     title,
@@ -46,10 +46,8 @@ const WriteActionButtonsContainer = ({ history, match }) => {
   // 성공 혹은 실패시 할 작업
   useEffect(() => {
     if (post) {
-      console.log("포스트", post);
-      console.log("크기", post.data);
       const { _id, user } = post;
-      console.log(_id);
+
       history.push(`/`);
     }
     if (postError) {
@@ -57,7 +55,6 @@ const WriteActionButtonsContainer = ({ history, match }) => {
     }
   }, [history, post, postError]);
   const onUpdatePost = ({ pk }) => {
-    console.log("updatepost pk", pk);
     dispatch(updatePost({ pk, content }));
   };
   return (

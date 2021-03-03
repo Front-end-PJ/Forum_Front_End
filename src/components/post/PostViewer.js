@@ -82,7 +82,7 @@ const PostViewer = ({
   const { title, content, writeAt } = _data.fields;
   const { reply_length } = _data;
   ownPost(_data.fields.author.fields.username);
-  console.log(_data);
+
   return (
     <PostViewerBlock>
       <PostHead>
@@ -95,9 +95,9 @@ const PostViewer = ({
 
       <PostHead />
 
-      <PostHead>
+      {/* <PostHead>
         <span>댓글개수 : {reply_length}</span>
-      </PostHead>
+      </PostHead> */}
     </PostViewerBlock>
   );
 };

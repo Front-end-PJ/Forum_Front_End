@@ -51,14 +51,11 @@ const PostCommentContainer = ({ match }) => {
     //댓글 읽어오기
     const id = pk;
     dispatch(readComment(id));
-    dispatch(readComment(id));
-    dispatch(readComment(id));
   };
   const onWriteRecomment = ({ pk, content }) => {
     dispatch(writeReComment({ pk, content }));
     const id = pk;
 
-    dispatch(readRecomment(id));
     dispatch(readRecomment(id));
     dispatch(readRecomment(id));
     dispatch(readComment(postId));
@@ -71,7 +68,6 @@ const PostCommentContainer = ({ match }) => {
   // // 댓글 삭제하기
   // let is = 'hihi';
   const onRemove = ({ pk }) => {
-    console.log("댓글 삭제 pk:", pk);
     dispatch(deleteComment({ pk }));
   };
   // 작성자 게시물 확인하기
@@ -87,6 +83,7 @@ const PostCommentContainer = ({ match }) => {
     dispatch(readComment(postId));
     dispatch(readComment(postId));
   };
+  // 대댓글 수정하기
   const onChangeReComment = ({ pk, content, recomment_pk }) => {
     dispatch(changeReComment({ pk, content }));
     dispatch(readRecomment(recomment_pk));

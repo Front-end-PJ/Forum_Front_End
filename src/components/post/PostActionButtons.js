@@ -41,7 +41,6 @@ const PostActionButtons = ({ onEdit, onRemove, check, postsdata, match }) => {
   };
   const { postId } = match.params;
 
-  console.log("postsdata:", postsdata);
   let new_data =
     postsdata &&
     postsdata.find((x) => {
@@ -57,7 +56,7 @@ const PostActionButtons = ({ onEdit, onRemove, check, postsdata, match }) => {
   const { pk } = new_data;
   const { username } = new_data.fields.author.fields;
   const originalPostId = username;
-  console.log("my data", originalPostId);
+
   const onEditThing = () => {
     onEdit({ title, pk, content, originalPostId });
   };
