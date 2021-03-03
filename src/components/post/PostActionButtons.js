@@ -40,13 +40,26 @@ const PostActionButtons = ({ onEdit, onRemove, check, postsdata, match }) => {
     onRemove();
   };
   const { postId } = match.params;
-  const new_data = postsdata.find((x) => x.pk === parseInt(postId, 10));
+
+  console.log("postsdata:", postsdata);
+  let new_data =
+    postsdata &&
+    postsdata.find((x) => {
+      return x.pk === parseInt(postId, 10);
+    });
+  if (postsdata !== null) {
+    localStorage.setItem("postdata", JSON.stringify(new_data));
+  } else {
+    new_data = JSON.parse(localStorage.getItem("postdata"));
+  }
 
   const { title, content } = new_data.fields;
   const { pk } = new_data;
-
+  const { username } = new_data.fields.author.fields;
+  const originalPostId = username;
+  console.log("my data", originalPostId);
   const onEditThing = () => {
-    onEdit({ title, pk, content });
+    onEdit({ title, pk, content, originalPostId });
   };
 
   return (

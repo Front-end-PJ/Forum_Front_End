@@ -31,7 +31,12 @@ export const writePost = createAction(WRITE_POST, ({ title, pk, content }) => ({
 }));
 export const setOriginalPost = createAction(
   SET_ORIGINAL_POST,
-  ({ title, pk, content }) => ({ title, pk, content })
+  ({ title, pk, content, originalPostId }) => ({
+    title,
+    pk,
+    content,
+    originalPostId,
+  })
 );
 export const updatePost = createAction(UPDATE_POST, ({ pk, content }) => ({
   pk,
@@ -49,12 +54,11 @@ export function* writeSaga() {
 
 const initialState = {
   title: "",
-  pk: 1,
+  pk: "",
   content: "",
-
+  originalPostId: "",
   post: null,
   postError: null,
-  originalPostId: null,
 };
 
 const write = handleActions(
@@ -80,11 +84,15 @@ const write = handleActions(
       ...state,
       postError,
     }),
-    [SET_ORIGINAL_POST]: (state, { payload: { title, pk, content } }) => ({
+    [SET_ORIGINAL_POST]: (
+      state,
+      { payload: { title, pk, content, originalPostId } }
+    ) => ({
       ...state,
       title,
       pk,
       content,
+      originalPostId,
     }),
     [UPDATE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,

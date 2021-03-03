@@ -82,7 +82,7 @@ const PostViewer = ({
   const { title, content, writeAt } = _data.fields;
   const { reply_length } = _data;
   ownPost(_data.fields.author.fields.username);
-
+  console.log(_data);
   return (
     <PostViewerBlock>
       <PostHead>

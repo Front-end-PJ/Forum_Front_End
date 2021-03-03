@@ -21,14 +21,19 @@ const PostViewerContainer = ({ match, history }) => {
     comment,
     data,
     _postId,
+
     postsdata,
-  } = useSelector(({ post, loading, user, posts }) => ({
+  } = useSelector(({ post, loading, user, posts, write }) => ({
     post: post.post,
     error: post.error,
     loading: loading["post/READ_POST"],
     user: user.user,
     data: post.data,
     _postId: post._postId,
+    title: write.title,
+    pk: write.pk,
+    content: write.content,
+    originalPostId: write.originalPostId,
     postsdata: posts.postsdata,
   }));
 
@@ -39,8 +44,8 @@ const PostViewerContainer = ({ match, history }) => {
     };
   }, [dispatch, _postId]);
 
-  const onEdit = ({ title, pk, content }) => {
-    dispatch(setOriginalPost({ title, pk, content }));
+  const onEdit = ({ title, pk, content, originalPostId }) => {
+    dispatch(setOriginalPost({ title, pk, content, originalPostId }));
     history.push("/write");
   };
   // 게시물 삭제
@@ -58,10 +63,6 @@ const PostViewerContainer = ({ match, history }) => {
     if (PostId === user) {
       onCheck(true);
     }
-  };
-  const onUpdatePost = ({ pk, content }) => {
-    dispatch(updatePost({ pk, content }));
-    dispatch(dispatch(listPosts(postId)));
   };
 
   // const ownPost = (user) === (post && postsdata.user._id);
@@ -81,7 +82,6 @@ const PostViewerContainer = ({ match, history }) => {
           <PostActionButtons
             postsdata={postsdata}
             onEdit={onEdit}
-            onUpdatePost={onUpdatePost}
             onRemove={onRemove}
             check={check}
           />

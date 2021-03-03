@@ -3,6 +3,7 @@ import WriteActionButtons from "../../components/write/WriteActionButtons";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { writePost, updatePost } from "../../modules/write";
+import { listPosts } from "../../modules/posts";
 
 const WriteActionButtonsContainer = ({ history, match }) => {
   const { postId } = match.params;
@@ -18,11 +19,11 @@ const WriteActionButtonsContainer = ({ history, match }) => {
     originalPostId,
   } = useSelector(({ write }) => ({
     title: write.title,
+    pk: write.pk,
     content: write.content,
     tags: write.tags,
     post: write.post,
     postError: write.postError,
-    pk: 1,
     originalPostId: write.originalPostId,
   }));
 
@@ -55,11 +56,17 @@ const WriteActionButtonsContainer = ({ history, match }) => {
       console.log(postError);
     }
   }, [history, post, postError]);
+  const onUpdatePost = ({ pk }) => {
+    console.log("updatepost pk", pk);
+    dispatch(updatePost({ pk, content }));
+  };
   return (
     <WriteActionButtons
+      pk={pk}
+      originalPostId={originalPostId}
       onPublish={onPublish}
       onCancel={onCancel}
-      isEdit={!!originalPostId}
+      onUpdatePost={onUpdatePost}
     />
   );
 };

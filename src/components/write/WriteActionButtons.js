@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import Button from '../common/Button';
+import React from "react";
+import styled from "styled-components";
+import Button from "../common/Button";
 
 const WriteActionButtonsBlock = styled.div`
   margin-top: 1rem;
@@ -18,12 +18,26 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const WriteActionButtons = ({ onCancel, onPublish, isEdit }) => {
+const WriteActionButtons = ({
+  onCancel,
+  onPublish,
+  onUpdatePost,
+  originalPostId,
+  pk,
+}) => {
   return (
     <WriteActionButtonsBlock>
-      <StyledButton cyan onClick={onPublish}>
-        포스트 {isEdit ? '수정' : '등록'}
-      </StyledButton>
+      {!originalPostId ? (
+        <StyledButton cyan onClick={onPublish}>
+          포스트 등록
+        </StyledButton>
+      ) : (
+        <StyledButton cyan onClick={() => onUpdatePost({ pk })}>
+          포스트 수정
+          {console.log(pk)}
+        </StyledButton>
+      )}
+
       <StyledButton onClick={onCancel}>취소</StyledButton>
     </WriteActionButtonsBlock>
   );

@@ -30,7 +30,7 @@ export const updatePost = ({ pk, content }) => {
     pk,
     content,
   });
-  return client.post("/post", queryString);
+  return client.put("/post", queryString);
 };
 
 // 댓글 수정하기
