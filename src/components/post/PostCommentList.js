@@ -3,7 +3,6 @@ import styled from "styled-components";
 import PostCommentItem from "./PostCommentItem";
 import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
-import { stringify } from "qs";
 const Input = styled.input`
   resize: none;
   padding: 1rem 1rem 1.5rem;

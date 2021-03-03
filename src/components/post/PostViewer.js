@@ -4,7 +4,7 @@ import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import { withRouter } from "react-router-dom";
 import SubInfo from "../common/SubInfo";
-import Tags from "../common/Tags";
+
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
@@ -20,13 +20,6 @@ const PostHead = styled.div`
   span {
     font-size: 0.8rem;
   }
-`;
-
-const CommentHead = styled.div`
-  font-size: 2rem;
-  color: black;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
 `;
 
 const SubInfoinPost = styled(SubInfo)`
