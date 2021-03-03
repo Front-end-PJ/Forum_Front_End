@@ -42,8 +42,13 @@ const PostCommentContainer = ({ match }) => {
       dispatch(unloadComment());
     };
   }, [dispatch, pk, content, postId]);
+  // 댓글 읽어오기
   const onReadComment = ({ id }) => {
     dispatch(readComment(id));
+  };
+  // 대댓글 읽어오기
+  const onClickRe = ({ id }) => {
+    dispatch(readRecomment(id));
   };
   // 댓글 쓰기
   const onPublish = ({ content }) => {
@@ -52,19 +57,15 @@ const PostCommentContainer = ({ match }) => {
     const id = pk;
     dispatch(readComment(id));
   };
+  // 대댓글 쓰기
   const onWriteRecomment = ({ pk, content }) => {
     dispatch(writeReComment({ pk, content }));
     const id = pk;
-
-    dispatch(readRecomment(id));
-    dispatch(readRecomment(id));
     dispatch(readComment(postId));
-  };
-  // 대댓글 읽어오기
-  const onClickRe = ({ id }) => {
     dispatch(readRecomment(id));
-    dispatch(readComment(id));
+    dispatch(readRecomment(id));
   };
+
   // // 댓글 삭제하기
   // let is = 'hihi';
   const onRemove = ({ pk }) => {
@@ -81,12 +82,10 @@ const PostCommentContainer = ({ match }) => {
   const onChangeComment = ({ pk, content }) => {
     dispatch(changeComment({ pk, content }));
     dispatch(readComment(postId));
-    dispatch(readComment(postId));
   };
   // 대댓글 수정하기
   const onChangeReComment = ({ pk, content, recomment_pk }) => {
     dispatch(changeReComment({ pk, content }));
-    dispatch(readRecomment(recomment_pk));
     dispatch(readRecomment(recomment_pk));
   };
   return (
