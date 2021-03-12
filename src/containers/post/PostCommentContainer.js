@@ -96,7 +96,6 @@ const PostCommentContainer = ({ match }) => {
   return (
     <PostCommentList
       comment={comment}
-      // onToggle={onToggle}
       onPublish={onPublish}
       onRemove={onRemove}
       postId={postId}

@@ -6,9 +6,9 @@ const client = axios.create();
 
 // // 글로벌 설정
 
-// // // API 주소 다른 곳 사용
-// client.defaults.baseURL = "https://djangocrudboard.ml";
-// client.defaults.withCredentials = true;
+// // API 주소 다른 곳 사용
+client.defaults.baseURL = "https://djangocrudboard.ml";
+client.defaults.withCredentials = true;
 
 // //header
 // client.defaults.headers.common['Authorization'] = '주소';
