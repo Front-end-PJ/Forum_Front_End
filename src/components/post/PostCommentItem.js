@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { withRouter, Redirect } from "react-dom";
 import palatte from "../../lib/styles/palette";
 import PostCommentToggle from "./PostCommentToggle";
 // import { deleteComment } from "../../modules/comment";
-import { changeComment, deleteComment, readComment } from "../../lib/api/posts";
+import { deleteComment } from "../../lib/api/posts";
 const CommentBlock = styled.span`
   display: flex;
   justify-content: flex-start;
@@ -52,21 +51,18 @@ const Input = styled.input`
 
 const PostCommentItem = ({
   comment,
-  onRemove,
   user,
   onClickRe,
   recommentdata,
   onWriteRecomment,
   onReadComment,
   ownComment,
-  history,
   onChangeComment,
   onChangeReComment,
 }) => {
   const [text, setText] = useState("");
   const [edit, setEdit] = useState(false);
   const [out, setOut] = useState(false);
-  const [redirect, setRedirect] = useState("");
   const { writeAt, content } = comment.fields;
   const { username } = comment.fields.author.fields;
 
@@ -126,7 +122,7 @@ const PostCommentItem = ({
           )}
           {edit || (
             <div>
-              <CommentBlock>{redirect ? content : content}</CommentBlock>
+              <CommentBlock>{content}</CommentBlock>
               {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
               {ownThing ? (
                 <>

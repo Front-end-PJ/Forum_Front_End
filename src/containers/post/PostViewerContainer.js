@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { readPost, unloadPost } from "../../modules/post";
+import { unloadPost } from "../../modules/post";
 import PostViewer from "../../components/post/PostViewer";
 import PostActionButtons from "../../components/post/PostActionButtons";
-import { setOriginalPost, updatePost } from "../../modules/write";
+import { setOriginalPost } from "../../modules/write";
 import { deletePost } from "../../lib/api/posts";
-import { listPosts } from "../../modules/posts";
 
 const PostViewerContainer = ({ match, history }) => {
   // 처음 마운트될 때 포스트 읽기 API 요청
@@ -18,7 +17,6 @@ const PostViewerContainer = ({ match, history }) => {
     error,
     loading,
     user,
-    comment,
     data,
     _postId,
 
@@ -64,9 +62,6 @@ const PostViewerContainer = ({ match, history }) => {
       onCheck(true);
     }
   };
-
-  // const ownPost = (user) === (post && postsdata.user._id);
-  // const ownComment = (user && user._id) === (post && post.user_id);
 
   return (
     <>

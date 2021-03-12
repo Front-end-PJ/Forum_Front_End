@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
@@ -32,25 +32,20 @@ const PostContent = styled.div`
 `;
 
 const PostViewer = ({
-  post,
   error,
   loading,
   actionButtons,
-  data,
   postId,
   postsdata,
   ownPost,
-  match,
 }) => {
-  const [set, onSet] = useState(false);
+  // const [set, onSet] = useState(false);
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
     }
-    {
-      console.log(error);
-    }
+    console.log(error);
     return <PostViewerBlock>오류 발생!</PostViewerBlock>;
   }
 
@@ -73,7 +68,6 @@ const PostViewer = ({
     _data = JSON.parse(localStorage.getItem("data"));
   }
   const { title, content, writeAt } = _data.fields;
-  const { reply_length } = _data;
   ownPost(_data.fields.author.fields.username);
 
   return (
@@ -81,16 +75,11 @@ const PostViewer = ({
       <PostHead>
         <h1>제목 : {title}</h1>
         <SubInfoinPost publishedDate={writeAt} hasMarginTop />
-        {/* <Tags tags={tags} /> */}
       </PostHead>
       {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: content }} />
 
       <PostHead />
-
-      {/* <PostHead>
-        <span>댓글개수 : {reply_length}</span>
-      </PostHead> */}
     </PostViewerBlock>
   );
 };

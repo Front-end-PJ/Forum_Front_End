@@ -101,11 +101,6 @@ const PostCommentToggle = ({
   const [setRe, onSetRe] = useState(false);
   const [text, setText] = useState("");
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    onRecomment(text);
-    setText("");
-  };
   const onSubmitRe = (e) => {
     e.preventDefault();
     const content = text;
@@ -123,10 +118,7 @@ const PostCommentToggle = ({
   const onClick2 = () => {
     onSetRe(!setRe);
   };
-  const onClickrecomment = () => {
-    let id = pk;
-    onClickRe({ id });
-  };
+
   const onRead = () => {
     let id = pk;
     onReadComment({ id });

@@ -3,10 +3,7 @@ import styled from "styled-components";
 import Responsive from "../common/Responsive";
 import Button from "../common/Button";
 import palette from "../../lib/styles/palette";
-import SubInfo from "../common/SubInfo";
-import Tags from "../common/Tags";
 import { Link, withRouter } from "react-router-dom";
-import { readPost } from "../../modules/post";
 
 const PostListBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -68,39 +65,11 @@ const PostItemBlock = styled.div`
   }
 `;
 
-const SideBlock = styled.div`
-  h1 {
-    font-size: 1.5rem;
-  }
-  position: fixed;
-  background-color: white;
-
-  width: 10%;
-  height: 100%;
-  margin-left: 100px;
-  margin-top: 70px;
-`;
-
-const BoardItem = ({ board }) => {
-  const { name } = board.fields;
-  const { post_length } = board;
-  const number = post_length;
-
-  return (
-    <>
-      <h2>
-        <Link to={`/board/${board.pk}`}>{name}</Link>
-      </h2>
-      <SubInfo>{number}</SubInfo>
-    </>
-  );
-};
-
 const PostItem = ({ post }) => {
   const { reply_length } = post;
-  const { email, username } = post.fields.author.fields;
+  const { username } = post.fields.author.fields;
 
-  const { title, content, writeAt, board } = post.fields;
+  const { title, writeAt } = post.fields;
 
   const postDate = writeAt.split("T");
 
@@ -113,7 +82,7 @@ const PostItem = ({ post }) => {
       <p>
         작성자 : {username} 작성일 {postDate[0]}
       </p>
-      {/* <span>{content}</span> */}
+
       <br />
       <span>댓글 수 : {reply_length}</span>
     </PostItemBlock>
@@ -122,38 +91,20 @@ const PostItem = ({ post }) => {
 
 const PostList = ({
   posts,
-  boards,
   loading,
   error,
   showWriteButton,
-  data,
-  match,
   postsdata,
   postId,
-  post,
+
   user,
 }) => {
   // 에러 발생 시
   if (error) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
   }
-  // if (postId === undefined) {
-  //   return (postId = 1);
-  // }
-  const _postId = parseInt(localStorage.getItem("postId"));
   return (
     <BoardItemBlock>
-      {/* <SideBlock>
-        <h1>게시판 목록</h1>
-
-        {!loading && boards && (
-          <div>
-            {data.map((board) => (
-              <BoardItem board={board} key={board.pk} />
-            ))}
-          </div>
-        )}
-      </SideBlock> */}
       <PostListBlock>
         <WritePostButtonWrapper>
           {showWriteButton && user ? (

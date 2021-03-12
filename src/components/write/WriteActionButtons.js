@@ -34,7 +34,6 @@ const WriteActionButtons = ({
       ) : (
         <StyledButton cyan onClick={() => onUpdatePost({ pk })}>
           포스트 수정
-          {console.log(pk)}
         </StyledButton>
       )}
 

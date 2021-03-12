@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { AiOutlineMenu } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import palette from '../../lib/styles/palette';
-import Responsive from './Responsive';
+import React from "react";
+import styled from "styled-components";
+import { AiOutlineMenu } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import palette from "../../lib/styles/palette";
+import Responsive from "./Responsive";
 
-import Button from './Button';
+import Button from "./Button";
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -51,6 +51,21 @@ const MenuList = styled(Link)`
   margin-right: 1rem;
 `;
 
+const BoardList = styled.div`
+  ul {
+    display: none;
+    position: fixed;
+  }
+
+  :hover {
+    ul {
+      display: block;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+  }
+`;
+
 const BoardItem = ({ board }) => {
   const { name } = board.fields;
   const { post_length } = board;
@@ -62,33 +77,25 @@ const BoardItem = ({ board }) => {
     </>
   );
 };
-const Header = ({ user, onLogout, onClick, boards, data }) => {
+const Header = ({ user, onLogout, boards }) => {
   return (
     <>
+      {console.log(boards)}
       <HeaderBlock>
-        {/* <Menu>
-          <AiOutlineMenu
-            className="menu"
-            color="#22b8cf"
-            onClick={onClick}
-          ></AiOutlineMenu>
-          <ul className="box">
-            <h1>게시판</h1>
-            {boards && (
-              <ul>
-                {data.map((board) => (
-                  <BoardItem board={board} key={board.pk} />
-                ))}
-              </ul>
-            )}
-          </ul>
-        </Menu> */}
         <Wrapper>
           <Link to="/" className="logo">
             REACTERS
           </Link>
-          <MenuList to="/">FORUM</MenuList>
-          <MenuList to="/login">BOARD</MenuList>
+          <MenuList>
+            <BoardList>
+              Board List
+              {/* <ul>
+                {boards.map((board) => (
+                  <li key={board.pk}>{board.fields.name}</li>
+                ))}
+              </ul> */}
+            </BoardList>
+          </MenuList>
           <MenuList to="/board/1">Q&A</MenuList>
 
           {user ? (

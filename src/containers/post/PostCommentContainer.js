@@ -56,12 +56,15 @@ const PostCommentContainer = ({ match }) => {
     //댓글 읽어오기
     const id = pk;
     dispatch(readComment(id));
+    dispatch(readComment(id));
+    dispatch(readComment(id));
   };
   // 대댓글 쓰기
   const onWriteRecomment = ({ pk, content }) => {
     dispatch(writeReComment({ pk, content }));
     const id = pk;
     dispatch(readComment(postId));
+    dispatch(readRecomment(id));
     dispatch(readRecomment(id));
     dispatch(readRecomment(id));
   };
@@ -82,10 +85,12 @@ const PostCommentContainer = ({ match }) => {
   const onChangeComment = ({ pk, content }) => {
     dispatch(changeComment({ pk, content }));
     dispatch(readComment(postId));
+    dispatch(readComment(postId));
   };
   // 대댓글 수정하기
   const onChangeReComment = ({ pk, content, recomment_pk }) => {
     dispatch(changeReComment({ pk, content }));
+    dispatch(readRecomment(recomment_pk));
     dispatch(readRecomment(recomment_pk));
   };
   return (
