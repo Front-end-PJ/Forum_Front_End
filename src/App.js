@@ -1,12 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
-import { Route } from 'react-router-dom';
-import PostListPage from './pages/PostListPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import WritePage from './pages/WritePage';
-import PostPage from './pages/PostPage';
-import { Helmet } from 'react-helmet-async';
+import "./App.css";
+import { Route } from "react-router-dom";
+import PostListPage from "./pages/PostListPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import WritePage from "./pages/WritePage";
+import PostPage from "./pages/PostPage";
+import { Helmet } from "react-helmet-async";
 
 function App() {
   return (
@@ -16,7 +15,7 @@ function App() {
       </Helmet>
       <Route
         component={PostListPage}
-        path={['/board/:postId', '/board', '/']}
+        path={["/board/:postId", "/board", "/"]}
         exact
       />
       <Route component={LoginPage} path="/login" />

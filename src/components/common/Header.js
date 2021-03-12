@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import palette from "../../lib/styles/palette";
 import Responsive from "./Responsive";
 
 import Button from "./Button";
@@ -66,17 +64,6 @@ const BoardList = styled.div`
   }
 `;
 
-const BoardItem = ({ board }) => {
-  const { name } = board.fields;
-  const { post_length } = board;
-  const number = post_length;
-
-  return (
-    <>
-      <Link to={`/board/${board.pk}`}>{name}</Link>
-    </>
-  );
-};
 const Header = ({ user, onLogout, boards }) => {
   return (
     <>
@@ -87,14 +74,7 @@ const Header = ({ user, onLogout, boards }) => {
             REACTERS
           </Link>
           <MenuList>
-            <BoardList>
-              Board List
-              {/* <ul>
-                {boards.map((board) => (
-                  <li key={board.pk}>{board.fields.name}</li>
-                ))}
-              </ul> */}
-            </BoardList>
+            <BoardList>Board List</BoardList>
           </MenuList>
           <MenuList to="/board/1">Q&A</MenuList>
 
