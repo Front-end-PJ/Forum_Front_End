@@ -1,7 +1,7 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
-import palette from '../../lib/styles/palette';
+import React from "react";
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import palette from "../../lib/styles/palette";
 
 const buttonStyle = css`
   border: none;
@@ -9,6 +9,10 @@ const buttonStyle = css`
   font-size: 1rem;
   font-weight: bold;
   padding: 0.25rem 1rem;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-self: center;
   color: white;
   outline: none;
   cursor: pointer;

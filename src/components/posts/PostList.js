@@ -7,6 +7,9 @@ import { Link, withRouter } from "react-router-dom";
 
 const PostListBlock = styled(Responsive)`
   margin-top: 3rem;
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
 `;
 
 const WritePostButtonWrapper = styled.div`

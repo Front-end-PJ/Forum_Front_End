@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Responsive from "./Responsive";
-
+import { GiHamburgerMenu } from "react-icons/gi";
 import Button from "./Button";
 
 const HeaderBlock = styled.div`
   position: fixed;
+  display: flex;
   width: 100%;
   background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
-  z-index: 3;
+
+  #toggle {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 `;
 
 /**
@@ -30,6 +36,17 @@ const Wrapper = styled(Responsive)`
     display: flex;
     align-items: center;
   }
+  #menu_btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+  .toggle.on {
+    display: inline-block;
+  }
 `;
 
 /**
@@ -40,6 +57,9 @@ const Spacer = styled.div`
 `;
 
 const UserInfo = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
   font-weight: 800;
   margin-right: 1rem;
 `;
@@ -47,6 +67,9 @@ const UserInfo = styled.div`
 const MenuList = styled(Link)`
   font-weight: 800;
   margin-right: 1rem;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const BoardList = styled.div`
@@ -59,6 +82,9 @@ const BoardList = styled.div`
   }
 
   .dropdown {
+    @media (max-width: 768px) {
+      display: none;
+    }
     position: relative;
     display: inline-block;
   }
@@ -94,6 +120,14 @@ const BoardList = styled.div`
 `;
 
 const Header = ({ user, onLogout, boards }) => {
+  const [click, onClick] = useState(false);
+  const $toggles = document.querySelectorAll(".toggle"); //NodeList
+
+  function toggleElements() {
+    [].forEach.call($toggles, function (toggle) {
+      toggle.classList.toggle("on");
+    });
+  }
   let boards_data = boards && boards;
   if (boards !== null) {
     localStorage.setItem("boards", JSON.stringify(boards));
@@ -108,8 +142,9 @@ const Header = ({ user, onLogout, boards }) => {
           <Link to="/" className="logo">
             REACTERS
           </Link>
+          {/* 메뉴 리스트 */}
           <BoardList>
-            <MenuList className="dropdown">
+            <MenuList className="dropdown toggle">
               <p>BoardList</p>
               <div class="dropdown-content">
                 {boards_data && (
@@ -119,6 +154,7 @@ const Header = ({ user, onLogout, boards }) => {
                         to={`/board/${board.pk}`}
                         className="myLink"
                         key={board.pk}
+                        replace
                       >
                         {board.fields.name}
                       </Link>
@@ -128,22 +164,28 @@ const Header = ({ user, onLogout, boards }) => {
               </div>
             </MenuList>
           </BoardList>
-          <MenuList to="/board/2">Q&A</MenuList>
-
+          <MenuList className="toggle" to="/board/2">
+            Q&A
+          </MenuList>
+          {/* 로그인, 로그아웃 버튼 */}
           {user ? (
-            <div className="right">
-              <UserInfo>{user}</UserInfo>
+            <div className="toggle">
+              <UserInfo className="toggle">{user}</UserInfo>
               <Button cyan onClick={onLogout}>
                 로그아웃
               </Button>
             </div>
           ) : (
-            <div className="right">
+            <div className="toggle">
               <Button cyan to="/login">
                 로그인
               </Button>
             </div>
           )}
+          <GiHamburgerMenu
+            onClick={toggleElements}
+            id="menu_btn"
+          ></GiHamburgerMenu>
         </Wrapper>
       </HeaderBlock>
       <Spacer />
