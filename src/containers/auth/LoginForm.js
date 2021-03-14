@@ -55,15 +55,16 @@ const LoginForm = ({ history }) => {
   }, [auth, authError, dispatch, form]);
 
   useEffect(() => {
+    dispatch(check());
     if (user) {
-      history.push("/");
       try {
-        localStorage.setItem("user", JSON.stringify(user));
+        const _id = user.toString().replace(/"/g, "");
+        localStorage.setItem("user", JSON.stringify(_id));
         console.log("set user ok");
       } catch (e) {
         console.log("localStorage is not working");
       }
-
+      history.push("/");
       console.log("user", user);
     }
   }, [history, auth, form, user, dispatch]);

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeField, initializeForm, register } from "../../modules/auth";
+import {
+  changeField,
+  initializeForm,
+  login,
+  register,
+} from "../../modules/auth";
 import AuthForm from "../../components/auth/AuthForm";
 import { check } from "../../modules/user";
 import { withRouter } from "react-router-dom";
@@ -29,9 +34,9 @@ const RegisterForm = ({ history }) => {
   // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
-    const { username, password, passwordConfirm, email } = form;
+    const { username, nickname, password, passwordConfirm, email } = form;
     // 하나라도 비어있다면
-    if ([username, password, passwordConfirm, email].includes("")) {
+    if ([username, nickname, password, passwordConfirm, email].includes("")) {
       setError("빈 칸을 모두 입력하세요.");
       return;
     }
@@ -44,7 +49,7 @@ const RegisterForm = ({ history }) => {
       );
       return;
     }
-    dispatch(register({ username, email, password }));
+    dispatch(register({ username, nickname, email, password }));
   };
 
   // 컴포넌트가 처음 렌더링 될 때 form 을 초기화함
@@ -67,24 +72,29 @@ const RegisterForm = ({ history }) => {
     }
 
     if (auth) {
+      const { username, password } = form;
+      dispatch(login({ username, password }));
       console.log("회원가입 성공");
       history.push("/");
       console.log(auth);
     }
-  }, [auth, authError, dispatch, user, history]);
+  }, [auth, authError, dispatch, user, form, history]);
 
   // user 값이 잘 설정되었는지 확인
   useEffect(() => {
-    const { username } = form;
-    if (username) {
-      history.push("/"); // 홈 화면으로 이동
+    dispatch(check());
+    console.log("checking");
+    if (user) {
       try {
-        localStorage.setItem("user", JSON.stringify(username));
+        const _id = user.toString().replace(/"/g, "");
+        console.log("myidis", _id);
+        localStorage.setItem("user", JSON.stringify(_id));
       } catch (e) {
         console.log("localStorage is not working");
       }
+      history.push("/"); // 홈 화면으로 이동
     }
-  }, [history, user, form]);
+  }, [history, user, dispatch]);
 
   return (
     <AuthForm

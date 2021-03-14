@@ -13,14 +13,14 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes(
 const LOGOUT = "user/LOGOUT";
 
 export const tempSetUser = createAction(TEMP_SET_USER, (user) => user);
-export const check = createAction(CHECK, (user) => user);
+export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
 
 const checkSaga = createRequestSaga(CHECK, authAPI.check);
 
 function checkFailureSaga() {
   try {
-    console.log("hihih");
+    console.log();
     localStorage.removeItem("user"); // localStorage 에서 user 제거하고
   } catch (e) {
     console.log("localStorage is not working");
@@ -30,6 +30,7 @@ function checkFailureSaga() {
 function* logoutSaga() {
   try {
     yield call(authAPI.logout); // logout API 호출
+    console.log("hjisadfjaiskdlf");
     localStorage.removeItem("user"); // localStorage 에서 user 제거
   } catch (e) {
     console.log(e);
@@ -38,8 +39,8 @@ function* logoutSaga() {
 
 export function* userSaga() {
   yield takeLatest(CHECK, checkSaga);
-  yield takeLatest(CHECK_FAILURE, checkFailureSaga);
   yield takeLatest(LOGOUT, logoutSaga);
+  // yield takeLatest(CHECK_FAILURE, checkFailureSaga);
 }
 
 const initialState = {
@@ -57,13 +58,14 @@ export default handleActions(
     [CHECK_SUCCESS]: (state, { payload: data }) => ({
       ...state,
       data,
+      user: state.data.username,
       checkError: null,
     }),
-    [CHECK_FAILURE]: (state, { payload: error }) => ({
-      ...state,
-      user: null,
-      checkError: error,
-    }),
+    // [CHECK_FAILURE]: (state, { payload: error }) => ({
+    //   ...state,
+    //   user: null,
+    //   checkError: error,
+    // }),
     [LOGOUT]: (state) => ({
       ...state,
       user: null,

@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
-import { Link } from 'react-router-dom';
-import Button from '../common/Button';
+import React from "react";
+import styled from "styled-components";
+import palette from "../../lib/styles/palette";
+import { Link } from "react-router-dom";
+import Button from "../common/Button";
 // 회원가입 또는 로그인 폼
 
 const AuthFormBlock = styled.div`
@@ -57,8 +57,8 @@ const ButtonWithMarginTop = styled(Button)`
 `;
 
 const textMap = {
-  login: '로그인',
-  register: '회원가입',
+  login: "로그인",
+  register: "회원가입",
 };
 
 const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
@@ -75,6 +75,15 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           onChange={onChange}
           value={form.username}
         />
+        {type === "register" && (
+          <StyledInput
+            autoComplete="nickname"
+            name="nickname"
+            placeholder="닉네임"
+            onChange={onChange}
+            value={form.nickname}
+          />
+        )}
         <StyledInput
           autoComplete="new-password"
           name="password"
@@ -83,7 +92,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           onChange={onChange}
           value={form.password}
         />
-        {type === 'register' && (
+        {type === "register" && (
           <StyledInput
             autoComplete="new-password"
             name="passwordConfirm"
@@ -93,7 +102,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
             value={form.passwordConfirm}
           />
         )}
-        {type === 'register' && (
+        {type === "register" && (
           <StyledInput
             autoComplete="email"
             name="email"
@@ -109,7 +118,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
         </ButtonWithMarginTop>
       </form>
       <Footer>
-        {type === 'login' ? (
+        {type === "login" ? (
           <Link to="/register">회원가입</Link>
         ) : (
           <Link to="/login">로그인</Link>
