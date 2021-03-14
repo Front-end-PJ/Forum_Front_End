@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -13,8 +13,8 @@ import { tempSetUser, check } from "./modules/user";
 import { HelmetProvider } from "react-helmet-async";
 const sagaMiddleware = createSagaMiddleWare();
 const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+   rootReducer,
+   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
 // local Stroage에 저장된 user 불러와 "" 제거
@@ -34,16 +34,16 @@ sagaMiddleware.run(rootSaga);
 loadUser();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+   <React.StrictMode>
+      <Provider store={store}>
+         <HashRouter>
+            <HelmetProvider>
+               <App />
+            </HelmetProvider>
+         </HashRouter>
+      </Provider>
+   </React.StrictMode>,
+   document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
