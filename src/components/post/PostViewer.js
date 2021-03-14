@@ -13,6 +13,10 @@ const PostHead = styled.div`
   padding-bottom: 3rem;
   margin-bottom: 3rem;
   h1 {
+    @media (max-width: 768px) {
+      margin-left: 1rem;
+      font-size: 2rem;
+    }
     font-size: 3rem;
     line-height: 1.5;
     margin: 0;
@@ -28,6 +32,11 @@ const SubInfoinPost = styled(SubInfo)`
 
 const PostContent = styled.div`
   font-size: 1.3125rem;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 1rem;
+    font-size: 1rem;
+  }
   color: ${palette.gray[8]};
 `;
 

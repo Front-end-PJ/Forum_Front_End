@@ -3,10 +3,15 @@ import styled from "styled-components";
 import Button from "../common/Button";
 
 const WriteActionButtonsBlock = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
   margin-top: 1rem;
   margin-bottom: 3rem;
   button + button {
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  :last-child {
+    padding-right: 1rem;
   }
 `;
 
@@ -27,6 +32,7 @@ const WriteActionButtons = ({
 }) => {
   return (
     <WriteActionButtonsBlock>
+      <StyledButton onClick={onCancel}>취소</StyledButton>
       {!originalPostId ? (
         <StyledButton cyan onClick={onPublish}>
           포스트 등록
@@ -36,8 +42,6 @@ const WriteActionButtons = ({
           포스트 수정
         </StyledButton>
       )}
-
-      <StyledButton onClick={onCancel}>취소</StyledButton>
     </WriteActionButtonsBlock>
   );
 };

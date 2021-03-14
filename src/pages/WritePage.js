@@ -7,7 +7,7 @@ const WritePage = () => {
   return (
     <Responsive>
       <EditorContainer />
-      <hr />
+
       <WriteActionButtonsContainer />
     </Responsive>
   );

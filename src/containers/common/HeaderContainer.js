@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../../components/common/Header";
-import Side from "../../components/common/Side";
 import { readBoard, toggleMenu } from "../../modules/posts";
 import { logout } from "../../modules/user";
 
@@ -32,7 +31,6 @@ const HeaderContainer = () => {
         boards={boards}
         data={data}
       />
-      {/* <Side></Side> */}
     </>
   );
 };
