@@ -9,10 +9,10 @@ const buttonStyle = css`
   font-size: 1rem;
   font-weight: bold;
   padding: 0.25rem 1rem;
-  align-items: center;
+  /* align-items: center;
   align-content: center;
   justify-content: center;
-  justify-self: center;
+  justify-self: center; */
   color: white;
   outline: none;
   cursor: pointer;
@@ -34,6 +34,9 @@ const buttonStyle = css`
       background: ${palette.cyan[5]};
       &:hover {
         background: ${palette.cyan[4]};
+      }
+      @media (max-width: 768px) {
+        width: 100%;
       }
     `}
     &:disabled {

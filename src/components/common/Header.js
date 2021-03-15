@@ -23,7 +23,6 @@ const HeaderBlock = styled.div`
  * Responsive 컴포넌트의 속성에 스타일을 추가해서 새로운 컴포넌트 생성
  */
 const Wrapper = styled(Responsive)`
-  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */

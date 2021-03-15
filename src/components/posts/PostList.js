@@ -8,10 +8,12 @@ import { Link, withRouter } from "react-router-dom";
 const PostListBlock = styled(Responsive)`
   margin-top: 3rem;
   @media (max-width: 768px) {
-    margin-top: 0;
+    margin-top: 0.5rem;
   }
 `;
-
+const Buttons = styled(Button)`
+  width: auto;
+`;
 const WritePostButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -111,9 +113,9 @@ const PostList = ({
       <PostListBlock>
         <WritePostButtonWrapper>
           {showWriteButton && user ? (
-            <Button cyan to={`/write/${postId}`}>
+            <Buttons cyan to={`/write/${postId}`}>
               새 글 작성하기
-            </Button>
+            </Buttons>
           ) : null}
         </WritePostButtonWrapper>
         {/*  로딩 중 아니고, 포스트 배열이 존재할 때만 보여줌 */}

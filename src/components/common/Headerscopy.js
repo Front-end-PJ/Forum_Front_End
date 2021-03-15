@@ -24,7 +24,7 @@ const HaderBlock = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 3;
+  display: flex;
   width: 100%;
   background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
@@ -39,7 +39,9 @@ const HaderBlock = styled.div`
 
 const Wrapper = styled(Responsive)`
   height: 4rem;
-
+  display: flex;
+  width: 100%;
+  justify-content: center;
   @media (max-width: 768px) {
     max-width: none;
     /* 초기화 */
@@ -53,6 +55,7 @@ const MenuGroup = styled.div`
     margin-top: 0.5rem;
     margin-left: 0;
   }
+
   display: flex;
   align-items: center;
   height: 100%;
@@ -82,7 +85,7 @@ const MenuGroup = styled.div`
   }
   .main-menu {
     display: flex;
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 800;
     align-content: center;
 
@@ -102,15 +105,13 @@ const MenuGroup = styled.div`
       }
       border-bottom: 1px solid #e5e5e5;
     }
-    margin-left: 7rem;
     display: flex;
-
     padding: 10px;
     color: #3c4146;
   }
 
   .btn {
-    order: 2;
+    order: 1;
     justify-content: center;
     @media (max-width: 768px) {
       text-align: center;
@@ -118,21 +119,6 @@ const MenuGroup = styled.div`
       margin: 0.5rem;
       display: block;
       justify-self: center;
-    }
-  }
-  .username {
-    order: 1;
-    font-weight: 800;
-    margin-right: 1.5rem;
-    justify-content: center;
-    p {
-      display: none;
-    }
-    @media (max-width: 768px) {
-      margin-left: 1.5rem;
-      p {
-        display: inline;
-      }
     }
   }
   @media (max-width: 768px) {
@@ -190,21 +176,20 @@ const Headers = ({ user, onLogout, boards }) => {
             )}
           </div>
         </MenuGroup>
-        <MenuGroup className="float--right">
+        <MenuGroup className="float--right toggle">
           {user ? (
-            <>
-              <div className="toggle username">
-                <p>ID : </p>
-                {user}
-              </div>
+            <div className="hi">
+              {/* <UserInfo className="toggle">{user}</UserInfo> */}
               <Button className="toggle btn" cyan onClick={onLogout}>
                 로그아웃
               </Button>
-            </>
+            </div>
           ) : (
-            <Button className="toggle btn" cyan to="/login">
-              로그인
-            </Button>
+            <div className="hi">
+              <Button className="toggle btn" cyan to="/login">
+                로그인
+              </Button>
+            </div>
           )}
         </MenuGroup>
       </Wrapper>
