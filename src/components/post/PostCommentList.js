@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PostCommentItem from "./PostCommentItem";
 import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
+import { readRecomment } from "../../modules/comment";
+import { useSelector, useDispatch } from "react-redux";
 const Input = styled.input`
   resize: none;
   padding: 1rem 1rem 1.5rem;
@@ -50,6 +52,7 @@ const PostViewerBlock = styled(Responsive)`
 const PostCommentList = ({
   user,
   comment,
+  number,
   data,
   onPublish,
   onRemove,
@@ -62,6 +65,7 @@ const PostCommentList = ({
   onChangeReComment,
 }) => {
   const [content, setText] = useState("");
+  const dispatch = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
     if (content === "") {
@@ -74,6 +78,17 @@ const PostCommentList = ({
   const onChange = (e) => {
     setText(e.target.value);
   };
+  console.log(number);
+
+  useEffect(() => {
+    if (data) {
+      let hi = data.filter((pk) => pk.answer_reply_length !== 0);
+      hi.forEach((is) => {
+        dispatch(readRecomment(is.pk));
+      });
+    }
+  }, [dispatch, data]);
+  console.log("increase", number);
   return (
     <PostViewerBlock>
       <PostHead>
@@ -105,7 +120,9 @@ const PostCommentList = ({
               user={user}
               onChangeComment={onChangeComment}
               onChangeReComment={onChangeReComment}
-            ></PostCommentItem>
+            >
+              {/* {onClickRe(comment.pk)} */}
+            </PostCommentItem>
           ))}
         </div>
       </PostHead>

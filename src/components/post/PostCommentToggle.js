@@ -116,7 +116,7 @@ const PostCommentToggle = ({
   const onClick = () => {
     onSet(!set);
     let id = pk;
-    onClickRe({ id });
+    onClickRe(id);
   };
   const onClick2 = () => {
     onSetRe(!setRe);

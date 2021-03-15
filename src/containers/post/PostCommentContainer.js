@@ -46,7 +46,7 @@ const PostCommentContainer = ({ match }) => {
     // 댓글 읽어오기
     dispatch(readComment(postId));
     return () => {
-      dispatch(clearRecomments());
+      // dispatch(clearRecomments());
       dispatch(initialize());
       dispatch(unloadComment());
     };
@@ -55,6 +55,7 @@ const PostCommentContainer = ({ match }) => {
   const onReadComment = useCallback(
     ({ id }) => {
       dispatch(readComment(id));
+      dispatch(readRecomment(id));
       // //여기서 해주면
       // dispatch(readRecomment(id));
     },
@@ -62,7 +63,7 @@ const PostCommentContainer = ({ match }) => {
   );
   // 대댓글 읽어오기
   const onClickRe = useCallback(
-    ({ id }) => {
+    (id) => {
       dispatch(readRecomment(id));
       // dispatch(readRecomment(id));
     },
@@ -74,6 +75,7 @@ const PostCommentContainer = ({ match }) => {
       dispatch(writeComment({ pk, content }));
       //댓글 읽어오기
       const id = pk;
+      number = number + 1;
       dispatch(readComment(id));
       dispatch(readComment(id));
       dispatch(readComment(id));
@@ -128,12 +130,14 @@ const PostCommentContainer = ({ match }) => {
     },
     [dispatch]
   );
+  let number = 0;
   return (
     <PostCommentList
       comment={comment}
       onPublish={onPublish}
       onRemove={onRemove}
       postId={postId}
+      number={number}
       data={data}
       user={user}
       onReadComment={onReadComment}
@@ -144,7 +148,9 @@ const PostCommentContainer = ({ match }) => {
       onChangeComment={onChangeComment}
       onChangeReComment={onChangeReComment}
       recommentList={recommentList}
-    ></PostCommentList>
+    >
+      {(number += 1)}
+    </PostCommentList>
   );
 };
 
