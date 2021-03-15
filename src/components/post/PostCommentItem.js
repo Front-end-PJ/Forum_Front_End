@@ -68,8 +68,15 @@ const PostCommentItem = ({
   const { writeAt, content } = comment.fields;
   const { username } = comment.fields.author.fields;
   const { pk } = comment;
-  console.log(pk);
-
+  console.log(comment.answer_reply_length);
+  let number = 0;
+  if (comment.answer_reply_length !== 0 && number === 0) {
+    let _pk = pk;
+    onClickRe({ pk });
+    console.log("pkis", { pk });
+    number += 1;
+  }
+  console.log("mynumberis", number);
   //  const { content } = recommentList.fields;
 
   const onChange = (e) => {
@@ -169,4 +176,4 @@ const PostCommentItem = ({
   );
 };
 
-export default PostCommentItem;
+export default React.memo(PostCommentItem);

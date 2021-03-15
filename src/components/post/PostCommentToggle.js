@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from "react-icons/ai";
 import styled from "styled-components";
 import palette from "../../lib/styles/palette";
@@ -101,15 +101,18 @@ const PostCommentToggle = ({
   const [setRe, onSetRe] = useState(false);
   const [text, setText] = useState("");
 
-  const onSubmitRe = (e) => {
-    e.preventDefault();
-    const content = text;
-    onWriteRecomment({ pk, content });
-    setText("");
-  };
-  const onChange = (e) => {
+  const onSubmitRe = useCallback(
+    (e) => {
+      e.preventDefault();
+      const content = text;
+      onWriteRecomment({ pk, content });
+      setText("");
+    },
+    [onWriteRecomment, pk, text]
+  );
+  const onChange = useCallback((e) => {
     setText(e.target.value);
-  };
+  }, []);
   const onClick = () => {
     onSet(!set);
     let id = pk;
