@@ -16,7 +16,9 @@ const PostHead = styled.div`
     @media (max-width: 768px) {
       margin-left: 1rem;
       font-size: 2rem;
+      padding-top: 0;
     }
+    padding-top: 2rem;
     font-size: 3rem;
     line-height: 1.5;
     margin: 0;
