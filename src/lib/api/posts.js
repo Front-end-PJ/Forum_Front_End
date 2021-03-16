@@ -82,6 +82,9 @@ export const writeReCommnet = ({ pk, content }) => {
 // 댓글 읽어오기
 export const readComment = (id) => client.get(`/reply?pk=${id}`);
 
+// 모든 댓글 읽어오기
+export const readComments = (id) => client.get(`/replies?pk=${id}`);
+
 // 대댓글 읽어오기
 export const readRecoment = (id) => client.get(`/answer_reply?pk=${id}`);
 

@@ -5,21 +5,31 @@ import PostCommentToggle from "./PostCommentToggle";
 // import { deleteComment } from "../../modules/comment";
 import { deleteComment } from "../../lib/api/posts";
 const CommentBlock = styled.span`
-  display: flex;
-  justify-content: flex-start;
-
-  div {
-    display: flex;
-    justify-content: flex-end;
-
-    margin-top: -1.5rem;
-    width: 100%;
-    margin-bottom: 2rem;
+  display: inline-flex;
+  width: 80%;
+  margin-bottom: 1rem;
+  @media (max-width: 768px) {
+    width: 70%;
+  }
+  word-break: break-all;
+`;
+const Blank = styled.div`
+  display: inline-flex;
+  width: 9%;
+  @media (max-width: 768px) {
+    width: 3%;
   }
 `;
 const ActionButton = styled.button`
+  display: inline-flex;
+  @media (max-width: 768px) {
+    width: 13%;
+    font-size: 0.875rem;
+  }
+  width: 5%;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  box-sizing: border-box;
   color: ${palatte.gray[6]};
   font-weight: bold;
   border: none;
@@ -32,12 +42,16 @@ const ActionButton = styled.button`
   }
   & + & {
     margin-left: 0.25rem;
+    @media (max-width: 768px) {
+      margin-left: 0.1rem;
+    }
   }
 `;
 
 const Input = styled.input`
   resize: none;
   padding: 1rem 1rem 1.5rem;
+  word-break: break-all;
   outline: none;
   border: 1px solid rgb(233, 236, 239);
   margin-bottom: 1.5rem;
@@ -69,7 +83,6 @@ const PostCommentItem = ({
   const { username } = comment.fields.author.fields;
   const { pk } = comment;
   console.log(comment.answer_reply_length);
-  let number = 0;
 
   //  const { content } = recommentList.fields;
 
@@ -105,52 +118,43 @@ const PostCommentItem = ({
   return (
     <>
       {out || (
-        <div>
+        <>
           {/* 댓글 정보 */}
-          <span>
+          <div>
             Date: {postDate[0]} username: {username}
-          </span>
+          </div>
           <hr />
           {/* 댓글 수정 부 form 으로 구현  */}
           {edit && (
             <form onSubmit={onSumbit}>
               <Input value={text} onChange={onChange}></Input>
-              <CommentBlock>
-                <div>
-                  <ActionButton type={"submit"}>등록</ActionButton>
-                  <ActionButton onClick={() => setEdit(!edit)}>
-                    취소
-                  </ActionButton>
-                </div>
-              </CommentBlock>
+              <>
+                <ActionButton type={"submit"}>등록</ActionButton>
+                <ActionButton onClick={() => setEdit(!edit)}>취소</ActionButton>
+              </>
             </form>
           )}
           {edit || (
-            <div>
-              <CommentBlock>{content}</CommentBlock>
+            <>
+              <CommentBlock className="box">{content}</CommentBlock>
               {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
               {ownThing ? (
                 <>
-                  <CommentBlock>
-                    <div>
-                      <ActionButton
-                        onClick={() => {
-                          setEdit(!edit);
-                          setText(content);
-                        }}
-                      >
-                        수정
-                      </ActionButton>
-                      <ActionButton onClick={onRemoveComment}>
-                        삭제
-                      </ActionButton>
-                    </div>
-                  </CommentBlock>
+                  <Blank>&nbsp;</Blank>
+                  <ActionButton
+                    onClick={() => {
+                      setEdit(!edit);
+                      setText(content);
+                    }}
+                  >
+                    수정
+                  </ActionButton>
+                  <ActionButton onClick={onRemoveComment}>삭제</ActionButton>
                 </>
               ) : (
                 <div>&nbsp;&nbsp;</div>
               )}
-            </div>
+            </>
           )}
 
           <PostCommentToggle
@@ -164,7 +168,7 @@ const PostCommentItem = ({
             onChangeReComment={onChangeReComment}
           />
           <br />
-        </div>
+        </>
       )}
     </>
   );

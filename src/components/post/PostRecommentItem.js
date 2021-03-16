@@ -1,41 +1,56 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { deleteRecomment } from "../../lib/api/posts";
-import palette from "../../lib/styles/palette";
+import palatte from "../../lib/styles/palette";
 
 const ReCommentBlock = styled.span`
-  display: flex;
-  justify-content: flex-start;
+  display: inline-flex;
+  width: 80%;
 
-  div {
-    display: flex;
-    justify-content: flex-end;
-
-    margin-top: -1.5rem;
-    width: 100%;
-    margin-bottom: 2rem;
+  white-space: normal;
+  hr {
+    width: 90%;
+  }
+  @media (max-width: 768px) {
+    width: 56%;
+  }
+  word-break: break-all;
+`;
+const Blank = styled.div`
+  display: inline-flex;
+  width: 7%;
+  @media (max-width: 768px) {
+    width: 3%;
   }
 `;
-
 const ActionButton = styled.button`
-  display: flex;
-  justify-content: flex-end;
-  padding: 0.25rem 0.5rem;
+  display: inline-flex;
+  @media (max-width: 768px) {
+    width: 20%;
+    font-size: 0.765rem;
+    padding: 0.2rem 0;
+  }
+  width: 6%;
+  /* padding: 0.25rem 0.5rem; */
   border-radius: 4px;
-  color: ${palette.gray[6]};
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  box-sizing: border-box;
+  color: ${palatte.gray[6]};
   font-weight: bold;
   border: none;
   outline: none;
   font-size: 0.875rem;
-  display: flex;
-  justify-content: flex-end;
   cursor: pointer;
   &:hover {
-    background: ${palette.gray[1]};
-    color: ${palette.cyan[7]};
+    background: ${palatte.gray[1]};
+    color: ${palatte.cyan[7]};
   }
   & + & {
     margin-left: 0.25rem;
+    @media (max-width: 768px) {
+      margin-left: 0.05rem;
+    }
   }
 `;
 
@@ -44,10 +59,11 @@ const Input = styled.input`
   padding: 1rem 1rem 1.5rem;
   outline: none;
   border: 1px solid rgb(233, 236, 239);
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   width: 100%;
   border-radius: 4px;
   min-height: 6.125rem;
+  padding-bottom: -1rem;
   font-size: 1rem;
   color: rgb(33, 37, 41);
   line-height: 1.75;
@@ -102,48 +118,45 @@ const PostRecommentItem = ({
   return (
     <>
       {out || (
-        <div>
+        <>
           {/* 댓글 정보 */}
-          <span>
+          <div>
             Date: {postDate[0]} username: {username}
-          </span>
+          </div>
           <hr />
           {/* 댓글 수정 부 form 으로 구현  */}
           {edit && (
             <form onSubmit={onSumbit}>
               <Input value={text} onChange={onChange}></Input>
-              <ReCommentBlock>
+              <>
                 <ActionButton type={"submit"}>등록</ActionButton>
                 <ActionButton onClick={() => setEdit(!edit)}>취소</ActionButton>
-              </ReCommentBlock>
+              </>
             </form>
           )}
           {edit || (
-            <div>
-              <ReCommentBlock>{content}</ReCommentBlock>
+            <>
+              <ReCommentBlock className="content">{content}</ReCommentBlock>
               {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
               {ownRecomment ? (
                 <>
-                  <ReCommentBlock>
-                    <div>
-                      <ActionButton
-                        onClick={() => {
-                          setEdit(!edit);
-                          setText(content);
-                        }}
-                      >
-                        수정
-                      </ActionButton>
-                      <ActionButton onClick={onRemove}>삭제</ActionButton>
-                    </div>
-                  </ReCommentBlock>
+                  <Blank>&nbsp;</Blank>
+                  <ActionButton
+                    onClick={() => {
+                      setEdit(!edit);
+                      setText(content);
+                    }}
+                  >
+                    수정
+                  </ActionButton>
+                  <ActionButton onClick={onRemove}>삭제</ActionButton>
                 </>
               ) : (
                 <div>&nbsp;&nbsp;</div>
               )}
-            </div>
+            </>
           )}
-        </div>
+        </>
       )}
     </>
   );

@@ -35,7 +35,10 @@ const Input = styled.input`
   padding: 1rem 1rem 1.5rem;
   outline: none;
   border: 1px solid rgb(233, 236, 239);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  @media (max-width: 768px) {
+    margin-bottom: 0.5rem;
+  }
   width: 100%;
   border-radius: 4px;
   min-height: 6.125rem;
@@ -52,7 +55,7 @@ const Button = styled.button`
   padding: 0.25rem 1rem;
   color: white;
   outline: none;
-
+  margin-bottom: 1rem;
   cursor: pointer;
   background: ${palette.cyan[5]};
   &:hover {
@@ -81,7 +84,6 @@ const RecommentBlock = styled.div`
   background-color: rgba(0, 0, 0, 0.016);
   padding: 1.5rem;
   border-radius: 10px;
-  margin-top: 1.3125rem;
 `;
 
 const PostCommentToggle = ({
@@ -96,6 +98,11 @@ const PostCommentToggle = ({
 }) => {
   const { pk } = comment;
   const { answer_reply_length } = comment;
+  let recommnet_datas;
+  if (answer_reply_length !== 0) {
+    recommnet_datas = comment.recomment_data;
+  }
+  console.log("redatais", recommnet_datas);
   // const { id } = comment.recomments;
   const [set, onSet] = useState(false);
   const [setRe, onSetRe] = useState(false);
@@ -113,7 +120,7 @@ const PostCommentToggle = ({
   const onClick = () => {
     onSet(!set);
     let id = pk;
-    onClickRe({ id });
+    onClickRe(id);
   };
   const onClick2 = () => {
     onSetRe(!setRe);
@@ -165,12 +172,14 @@ const PostCommentToggle = ({
           <Button type={"submit"} onClick={onRead}>
             등록
           </Button>
+          <br />
+          <br />
         </form>
       ) : null}
       {set && answer_reply_length !== 0 && (
         <>
           <RecommentBlock>
-            {recommentdata.map((recomment) => (
+            {recommnet_datas.map((recomment) => (
               <PostRecommentItem
                 key={recomment.pk}
                 recomment={recomment}
@@ -193,6 +202,7 @@ const PostCommentToggle = ({
                 onChange={onChange}
               ></Input>
               <Button type={"submit"}>등록</Button>
+              <br />
             </form>
           )}
         </>

@@ -133,6 +133,13 @@ const Header = ({ user, onLogout, boards }) => {
   } else {
     boards_data = JSON.parse(localStorage.getItem("boards"));
   }
+  async function get() {
+    try {
+      onLogout();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <>
@@ -181,6 +188,7 @@ const Header = ({ user, onLogout, boards }) => {
               </Button>
             </div>
           )}
+
           <GiHamburgerMenu
             onClick={toggleElements}
             id="menu_btn"

@@ -3,8 +3,6 @@ import styled from "styled-components";
 import PostCommentItem from "./PostCommentItem";
 import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
-import { readRecomment } from "../../modules/comment";
-import { useSelector, useDispatch } from "react-redux";
 const Input = styled.input`
   resize: none;
   padding: 1rem 1rem 1.5rem;
@@ -65,10 +63,7 @@ const PostCommentList = ({
   onChangeReComment,
 }) => {
   const [content, setText] = useState("");
-  const dispatch = useDispatch();
-  const { recommentList } = useSelector(({ comment }) => ({
-    recommentList: comment.recommentList,
-  }));
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (content === "") {
@@ -82,32 +77,7 @@ const PostCommentList = ({
     setText(e.target.value);
   };
   console.log(number);
-  let hi = data.filter((pk) => pk.answer_reply_length !== 0);
-  // async function his() {
-  //   try {
-  //     await dispatch(readRecomment(hi[2].pk));
-  //     await dispatch(readRecomment(hi[1].pk));
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-  // his();
-  useEffect(() => {
-    if (data) {
-      let hi = data.filter((pk) => pk.answer_reply_length !== 0);
-      const good = hi.length;
-      console.log("bkajlsdf", good);
-      console.log("datais", hi);
-      for (let i = 0; i < good; i++) {
-        dispatch(readRecomment(hi[i].pk));
 
-        console.log("hjijiasdfs");
-      }
-      hi.forEach((is) => {
-        dispatch(readRecomment(is.pk));
-      });
-    }
-  }, [dispatch, data]);
   return (
     <PostViewerBlock>
       <PostHead>
@@ -125,7 +95,7 @@ const PostCommentList = ({
         <br />
         <br />
 
-        <div>
+        <>
           {data.map((comment) => (
             <PostCommentItem
               key={comment.pk}
@@ -139,11 +109,9 @@ const PostCommentList = ({
               user={user}
               onChangeComment={onChangeComment}
               onChangeReComment={onChangeReComment}
-            >
-              {/* {onClickRe(comment.pk)} */}
-            </PostCommentItem>
+            ></PostCommentItem>
           ))}
-        </div>
+        </>
       </PostHead>
     </PostViewerBlock>
   );

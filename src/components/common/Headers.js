@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -146,6 +146,8 @@ const MenuGroup = styled.div`
 `;
 
 const Headers = ({ user, onLogout, boards }) => {
+  const [check, onCheck] = useState(false);
+
   const $toggles = document.querySelectorAll(".toggle"); //NodeList
   const $toggleBtn = document.getElementById("toggle-btn");
 
@@ -155,6 +157,23 @@ const Headers = ({ user, onLogout, boards }) => {
     });
   }
 
+  async function get() {
+    try {
+      onLogout();
+      const toggles2 = document.getElementById(".log");
+      console.log("select", toggles2);
+      toggles2.classList.toggle("on");
+      onCheck(true);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  if (check) {
+    const toggles2 = document.getElementById(".log");
+    console.log("select", toggles2);
+    toggles2.classList.toggle("on");
+    onCheck(false);
+  }
   let boards_data = boards && boards;
   if (boards !== null) {
     localStorage.setItem("boards", JSON.stringify(boards));
@@ -197,12 +216,12 @@ const Headers = ({ user, onLogout, boards }) => {
                 <p>ID : </p>
                 {user}
               </div>
-              <Button className="toggle btn" cyan onClick={onLogout}>
+              <Button className="toggle btn" cyan onClick={get}>
                 로그아웃
               </Button>
             </>
           ) : (
-            <Button className="toggle btn" cyan to="/login">
+            <Button className="toggle btn" id="log" cyan to="/login">
               로그인
             </Button>
           )}
