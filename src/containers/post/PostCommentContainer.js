@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteComment,
@@ -7,7 +7,6 @@ import {
   readRecomment,
   changeComment,
   changeReComment,
-
 } from "../../modules/comment";
 import PostCommentList from "../../components/post/PostCommentList";
 import { withRouter } from "react-router-dom";
@@ -18,7 +17,6 @@ import {
 } from "../../modules/commentwrite";
 
 const PostCommentContainer = ({ match }) => {
-  const [check, onCheck] = useState(false);
   const { postId } = match.params;
   const {
     comment,
@@ -75,7 +73,6 @@ const PostCommentContainer = ({ match }) => {
       dispatch(writeComment({ pk, content }));
       //댓글 읽어오기
       const id = pk;
-      number = number + 1;
       dispatch(readComment(id));
       dispatch(readComment(id));
       dispatch(readComment(id));
@@ -106,7 +103,6 @@ const PostCommentContainer = ({ match }) => {
   const ownComment = useCallback(
     (postId) => {
       if (postId === user) {
-        onCheck(true);
         return true;
       }
     },
