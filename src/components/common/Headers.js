@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -149,7 +149,6 @@ const Headers = ({ user, onLogout, boards }) => {
   const [check, onCheck] = useState(false);
 
   const $toggles = document.querySelectorAll(".toggle"); //NodeList
-  const $toggleBtn = document.getElementById("toggle-btn");
 
   function toggleElements() {
     [].forEach.call($toggles, function (toggle) {

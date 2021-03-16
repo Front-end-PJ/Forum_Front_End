@@ -7,7 +7,7 @@ import {
   readRecomment,
   changeComment,
   changeReComment,
-  clearRecomments,
+
 } from "../../modules/comment";
 import PostCommentList from "../../components/post/PostCommentList";
 import { withRouter } from "react-router-dom";

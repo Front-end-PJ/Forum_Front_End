@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Header from "../../components/common/Header";
 import Headers from "../../components/common/Headers";
 import { readBoard, toggleMenu } from "../../modules/posts";
 import { logout } from "../../modules/user";

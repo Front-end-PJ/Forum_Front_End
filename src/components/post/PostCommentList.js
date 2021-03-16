@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PostCommentItem from "./PostCommentItem";
 import palette from "../../lib/styles/palette";

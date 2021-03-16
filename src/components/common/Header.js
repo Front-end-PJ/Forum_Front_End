@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Responsive from "./Responsive";
@@ -119,7 +119,6 @@ const BoardList = styled.div`
 `;
 
 const Header = ({ user, onLogout, boards }) => {
-  const [click, onClick] = useState(false);
   const $toggles = document.querySelectorAll(".toggle"); //NodeList
 
   function toggleElements() {
@@ -132,13 +131,6 @@ const Header = ({ user, onLogout, boards }) => {
     localStorage.setItem("boards", JSON.stringify(boards));
   } else {
     boards_data = JSON.parse(localStorage.getItem("boards"));
-  }
-  async function get() {
-    try {
-      onLogout();
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   return (
