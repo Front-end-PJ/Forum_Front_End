@@ -7,6 +7,7 @@ const WriteActionButtonsBlock = styled.div`
   flex-direction: row-reverse;
   margin-top: 1rem;
   margin-bottom: 3rem;
+  white-space: nowrap;
   button + button {
     margin-right: 0.5rem;
   }
