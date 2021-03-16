@@ -55,7 +55,7 @@ const PostCommentContainer = ({ match }) => {
   const onReadComment = useCallback(
     ({ id }) => {
       dispatch(readComment(id));
-      dispatch(readRecomment(id));
+      // dispatch(readRecomment(id));
       // //여기서 해주면
       // dispatch(readRecomment(id));
     },

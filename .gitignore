@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+/my-json-server/node_modules
 
 # misc
 .DS_Store

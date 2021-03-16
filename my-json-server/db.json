@@ -1,0 +1,55 @@
+{
+    "data": [{
+        "model": "board.reply",
+        "pk": 7,
+        "fields": {
+            "post": 6,
+            "author": {
+                "model": "auth.user",
+                "pk": 1,
+                "fields": {
+                    "username": "ww8007"
+                }
+            },
+            "content": "ㅁㅋㅋㅋ",
+            "writeAt": "2021-03-13T16:10:54.793Z",
+            "unique_number": 2
+        },
+        "answer_reply_length": 1,
+        "recomment_data": [{
+                "model": "board.answerreply",
+                "pk": 9,
+                "fields": {
+                    "reply": 7,
+                    "author": {
+                        "model": "auth.user",
+                        "pk": 1,
+                        "fields": {
+                            "username": "ww8007"
+                        }
+                    },
+                    "content": "ㅋㅋㅋㅋㅋㅋ",
+                    "writeAt": "2021-03-13T16:11:02.994Z",
+                    "unique_number": 1
+                }
+            },
+            {
+                "model": "board.answerreply",
+                "pk": 13,
+                "fields": {
+                    "reply": 7,
+                    "author": {
+                        "model": "auth.user",
+                        "pk": 1,
+                        "fields": {
+                            "username": "ww8007"
+                        }
+                    },
+                    "content": "zzzz",
+                    "writeAt": "2021-03-15T17:05:09.064Z",
+                    "unique_number": 2
+                }
+            }
+        ]
+    }]
+}
