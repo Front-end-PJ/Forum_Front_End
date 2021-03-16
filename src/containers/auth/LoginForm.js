@@ -51,6 +51,7 @@ const LoginForm = ({ history }) => {
     }
     if (auth) {
       const { username } = form;
+
       console.log("로그인 성공");
       // dispatch(check(username));
       dispatch(tempSetUser(username));
