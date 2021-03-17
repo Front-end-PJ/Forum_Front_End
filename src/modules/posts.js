@@ -26,7 +26,11 @@ export const toggleMenu = createAction(TOGGLE_MENU);
 // 액션 만들어주기
 
 export const readBoard = createAction(READ_BOAD);
-export const listPosts = createAction(LIST_POSTS, (id) => id);
+export const listPosts = createAction(LIST_POSTS, ({ id, start, end }) => ({
+  id,
+  start,
+  end,
+}));
 
 //Saga 만들어주기
 

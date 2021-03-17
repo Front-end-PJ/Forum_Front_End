@@ -89,4 +89,5 @@ export const readComments = (id) => client.get(`/replies?pk=${id}`);
 export const readRecoment = (id) => client.get(`/answer_reply?pk=${id}`);
 
 // 글 읽어오기
-export const readPost = (id) => client.get(`/post?pk=${id}`);
+export const readPost = ({ id, start, end }) =>
+  client.get(`/post?pk=${id}&start=${start}&end=${end}`);

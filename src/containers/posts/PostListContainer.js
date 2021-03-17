@@ -26,9 +26,21 @@ const PostListContainer = ({ match, history }) => {
     if (postId === undefined) {
       postId = 1;
     }
+    let id = postId;
+    let start = localStorage.getItem("start");
+    let end = localStorage.getItem("end");
 
-    dispatch(readPost(postId));
-    dispatch(listPosts(postId));
+    if (start === null || end === null) {
+      localStorage.setItem("start", 0);
+      localStorage.setItem("end", 10);
+      start = 0;
+      end = 10;
+    } else {
+      start = start.toString().replace(/"/g, "");
+      end = end.toString().replace(/"/g, "");
+    }
+    console.log("start, end", start, end);
+    dispatch(listPosts({ id, start, end }));
   }, [dispatch, postId]);
   useEffect(() => {
     if (postId) {

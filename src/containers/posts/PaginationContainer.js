@@ -1,14 +1,14 @@
-import React from 'react';
-import Pagination from '../../components/posts/Pagination';
-import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import qs from 'qs';
+import React from "react";
+import Pagination from "../../components/posts/Pagination";
+import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+import qs from "qs";
 
 const PaginationContainer = ({ location }) => {
   const { lastPage, posts, loading } = useSelector(({ posts, loading }) => ({
     lastPage: posts.lastPage,
     posts: posts.posts,
-    loading: loading['posts/LIST_POSTS'],
+    loading: loading["posts/LIST_POSTS"],
   }));
 
   // 포스트 데이터가 없거나 로딩 중이면 아무것도 보여주지 않음
@@ -21,6 +21,7 @@ const PaginationContainer = ({ location }) => {
 
   return (
     <Pagination
+      {...console.log(qs.parse(location.search, { ignoreQueryPrefix: true }))}
       tag={tag}
       username={username}
       page={parseInt(page, 10)}

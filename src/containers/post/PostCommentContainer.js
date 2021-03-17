@@ -38,7 +38,6 @@ const PostCommentContainer = ({ match }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch(readPost(postId));
     // 언마운트될 때 리덕스에서 포스트 데이터 없애기
     dispatch(initialize());
     // 댓글 읽어오기
