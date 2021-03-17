@@ -12,12 +12,17 @@ const PostHead = styled.div`
   border-bottom: 1px solid ${palette.gray[2]};
   padding-bottom: 3rem;
   margin-bottom: 3rem;
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
   h1 {
     @media (max-width: 768px) {
       margin-left: 1rem;
       font-size: 2rem;
       padding-top: 0;
     }
+
     padding-top: 2rem;
     font-size: 3rem;
     line-height: 1.5;
@@ -28,13 +33,33 @@ const PostHead = styled.div`
   }
 `;
 
-const SubInfoinPost = styled(SubInfo)`
-  border: 1px solid ${palette.gray[2]};
+const SubInfoinPost = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  margin-left: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  span + span {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+  span.name {
+    margin-left: -0.8rem;
+    @media (max-width: 768px) {
+      margin-left: 0;
+    }
+    font-weight: bold;
+  }
+  span.content {
+    margin-left: 0;
+    font-weight: normal;
+  }
 `;
 
 const PostContent = styled.div`
   font-size: 1.3125rem;
   @media (max-width: 768px) {
+    margin-top: -1rem;
     width: 100%;
     margin-left: 1rem;
     font-size: 1rem;
@@ -79,14 +104,21 @@ const PostViewer = ({
     _data = JSON.parse(localStorage.getItem("data"));
   }
   const { title, content, writeAt } = _data.fields;
+  let postDate = writeAt.split("T");
   ownPost(_data.fields.author.fields.username);
+  let post_id = _data.fields.author.fields.username;
 
   return (
     <PostViewerBlock>
       <PostHead>
-        <h1>제목 : {title}</h1>
-        <SubInfoinPost publishedDate={writeAt} hasMarginTop />
+        <h1>{title}</h1>
+        <SubInfoinPost>
+          <span className="name">{post_id}</span>
+          <span>·</span>
+          <span className="content">{postDate[0]}</span>
+        </SubInfoinPost>
       </PostHead>
+
       {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: content }} />
 

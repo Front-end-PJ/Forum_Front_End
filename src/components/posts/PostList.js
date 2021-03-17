@@ -85,7 +85,9 @@ const PostItem = ({ post }) => {
       </h2>
 
       <p>
-        작성자 : {username} 작성일 {postDate[0]}
+        <Link to={`/board/post/${post.pk}`}>
+          작성자 : {username}, 작성일 : {postDate[0]}
+        </Link>
       </p>
 
       <br />

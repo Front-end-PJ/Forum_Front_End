@@ -31,11 +31,16 @@ const WriteActionButtons = ({
   originalPostId,
   pk,
 }) => {
+  const onPublishPost = () => {
+    let post_pk = localStorage.getItem("postId");
+    let local_pk = post_pk.toString().replace(/"/g, "");
+    onPublish(local_pk);
+  };
   return (
     <WriteActionButtonsBlock>
       <StyledButton onClick={onCancel}>취소</StyledButton>
       {!originalPostId ? (
-        <StyledButton cyan onClick={onPublish}>
+        <StyledButton cyan onClick={onPublishPost}>
           포스트 등록
         </StyledButton>
       ) : (

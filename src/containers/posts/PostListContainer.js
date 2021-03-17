@@ -33,6 +33,7 @@ const PostListContainer = ({ match, history }) => {
   useEffect(() => {
     if (postId) {
       try {
+        console.log(postId);
         localStorage.setItem("postId", JSON.stringify(postId));
       } catch (e) {
         console.log("localStorage is not working");

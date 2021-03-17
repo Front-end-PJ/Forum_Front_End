@@ -19,7 +19,17 @@ const WriteActionButtonsContainer = ({ history, match }) => {
   );
 
   // 포스트 등록
-  const onPublish = () => {
+  const onPublish = (pk) => {
+    console.log(pk);
+    if (title === "") {
+      alert("빈 제목은 입력할 수 없습니다!");
+      return;
+    }
+    if (content === "") {
+      alert("내용이 비어 있습니다!");
+      return;
+    }
+    localStorage.setItem("write_pk", pk);
     dispatch(
       writePost({
         title,
@@ -37,7 +47,9 @@ const WriteActionButtonsContainer = ({ history, match }) => {
   // 성공 혹은 실패시 할 작업
   useEffect(() => {
     if (post) {
-      history.push(`/`);
+      let page_pk = localStorage.getItem("write_pk");
+      const _id = page_pk.toString().replace(/"/g, "");
+      history.push(`/board/${_id}`);
     }
     if (postError) {
       console.log(postError);

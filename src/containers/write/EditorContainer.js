@@ -1,9 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
-import Editor from '../../components/write/Editor';
-import { useSelector, useDispatch } from 'react-redux';
-import { changeField, initialize } from '../../modules/write';
+import React, { useEffect, useCallback } from "react";
+import Editor from "../../components/write/Editor";
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { changeField, initialize } from "../../modules/write";
 
-const EditorContainer = () => {
+const EditorContainer = ({ match }) => {
   const dispatch = useDispatch();
   const { title, content } = useSelector(({ write }) => ({
     title: write.title,
@@ -11,17 +12,23 @@ const EditorContainer = () => {
   }));
   const onChangeField = useCallback(
     (payload) => dispatch(changeField(payload)),
-    [dispatch],
+    [dispatch]
   );
+  let post_pk;
   // 언마운트될 때 초기화
   useEffect(() => {
+    let post_pk = localStorage.getItem("postId");
+    console.log("Id", post_pk);
+    post_pk = match.params;
+    if (post_pk === undefined) post_pk = 1;
+
     return () => {
       dispatch(initialize());
     };
-  }, [dispatch]);
+  }, [dispatch, match.params]);
   return (
     <Editor onChangeField={onChangeField} title={title} content={content} />
   );
 };
 
-export default EditorContainer;
+export default withRouter(EditorContainer);

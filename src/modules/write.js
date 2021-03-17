@@ -54,7 +54,7 @@ export function* writeSaga() {
 
 const initialState = {
   title: "",
-  pk: "1",
+  pk: "",
   content: "",
   originalPostId: "",
   post: null,
