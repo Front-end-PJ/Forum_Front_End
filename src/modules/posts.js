@@ -5,10 +5,9 @@ import createRequestSaga, {
 import * as postsAPI from "../lib/api/posts";
 import { takeLatest } from "redux-saga/effects";
 
-
 // 다음버튼
 const [NEXT_PAGE] = "posts/NEXT_PAGE";
-const [PREV_PAGE]= "post/PREV_PAGE";
+const [PREV_PAGE] = "post/PREV_PAGE";
 
 // 게시판 목록 불러오기
 const [
@@ -25,8 +24,6 @@ const [
 ] = createRequestActionTypes("posts/LIST_POSTS");
 
 const TOGGLE_MENU = "posts/TOGGLE/MENU";
-
-
 
 export const toggleMenu = createAction(TOGGLE_MENU);
 
@@ -66,8 +63,12 @@ const posts = handleActions(
   {
     [NEXT_PAGE]: (state) => ({
       ...state,
-      
-    })
+      start: state.start + 1,
+    }),
+    [PREV_PAGE]: (state) => ({
+      ...state,
+      end: state.end - 1,
+    }),
     [LIST_POSTS_SUCCESS]: (state, { payload: posts }) => ({
       ...state,
       postsdata: posts.data,
