@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PostList from "../../components/posts/PostList";
 import { listPosts } from "../../modules/posts";
-import { readPost } from "../../modules/post";
 
 const PostListContainer = ({ match, history }) => {
   let { postId } = match.params;
@@ -45,7 +44,6 @@ const PostListContainer = ({ match, history }) => {
   useEffect(() => {
     if (postId) {
       try {
-        console.log(postId);
         localStorage.setItem("postId", JSON.stringify(postId));
       } catch (e) {
         console.log("localStorage is not working");

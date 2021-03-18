@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import qs from 'qs';
-import Button from '../common/Button';
+import React from "react";
+import styled from "styled-components";
+import qs from "qs";
+import Button from "../common/Button";
 
 const PaginationBlock = styled.div`
   width: 320px;
@@ -18,25 +18,19 @@ const buildLink = ({ username, tag, page }) => {
   return username ? `/@${username}?${query}` : `/?${query}`;
 };
 
-const Pagination = ({ page, lastPage, username, tag }) => {
+const Pagination = ({ page, lastPage }) => {
   return (
     <PaginationBlock>
       <Button
         disabled={page === 1}
-        to={
-          page === 1 ? undefined : buildLink({ username, tag, page: page - 1 })
-        }
+        to={page === 1 ? undefined : buildLink({ page: page - 1 })}
       >
         이전
       </Button>
       <PageNumber>{page}</PageNumber>
       <Button
         disabled={page === lastPage}
-        to={
-          page === lastPage
-            ? undefined
-            : buildLink({ username, tag, page: page + 1 })
-        }
+        to={page === lastPage ? undefined : buildLink({ page: page + 1 })}
       >
         다음
       </Button>
