@@ -18,10 +18,11 @@ const buildLink = ({ username, tag, page }) => {
   return username ? `/@${username}?${query}` : `/?${query}`;
 };
 
-const Pagination = ({ page, lastPage }) => {
+const Pagination = ({ page, lastPage, onClickNext, onClickPrev }) => {
   return (
     <PaginationBlock>
       <Button
+        onClick={onClickPrev}
         disabled={page === 1}
         to={page === 1 ? undefined : buildLink({ page: page - 1 })}
       >
@@ -29,6 +30,7 @@ const Pagination = ({ page, lastPage }) => {
       </Button>
       <PageNumber>{page}</PageNumber>
       <Button
+        onClick={onClickNext}
         disabled={page === lastPage}
         to={page === lastPage ? undefined : buildLink({ page: page + 1 })}
       >
