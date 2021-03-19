@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PostList from "../../components/posts/PostList";
 import { listPosts } from "../../modules/posts";
 
-const PostListContainer = ({ match, history }) => {
+const PostListContainer = ({ match }) => {
    let { postId } = match.params;
    const dispatch = useDispatch();
    const { posts, error, loading, user, data, post, postsdata } = useSelector(
@@ -25,31 +25,33 @@ const PostListContainer = ({ match, history }) => {
    if (postId === undefined) {
       postId = 1;
    }
+   let start, end;
+   start = localStorage.getItem("start");
+   end = localStorage.getItem("end");
+   if (start === isNaN || end === isNaN) {
+      localStorage.setItem("start", 0);
+      localStorage.setItem("end", 10);
+      console.log("hihi");
+      start = 1;
+      end = 10;
+   } else {
+      start = start.toString().replace(/"/g, "");
+      end = end.toString().replace(/"/g, "");
+   }
    useEffect(() => {
       let id = postId;
-      let start = localStorage.getItem("start");
-      let end = localStorage.getItem("end");
 
-      if (start === null || end === null) {
+      localStorage.setItem("id", id);
+      let diff = localStorage.getItem("id");
+      diff = diff.toString().replace(/"/g, "");
+      if (diff !== id) {
          localStorage.setItem("start", 0);
          localStorage.setItem("end", 10);
-         start = 0;
-         end = 10;
-      } else {
-         start = start.toString().replace(/"/g, "");
-         end = end.toString().replace(/"/g, "");
       }
-      console.log("start, end", start, end);
-      dispatch(listPosts({ id, start, end }));
-   }, [dispatch, postId]);
 
-   if (postId) {
-      try {
-         localStorage.setItem("postId", JSON.stringify(postId));
-      } catch (e) {
-         console.log("localStorage is not working");
-      }
-   }
+      dispatch(listPosts({ id, start, end }));
+   }, [dispatch, postId, end, start]);
+
    return (
       <PostList
          postId={postId}

@@ -1,26 +1,26 @@
 import { createAction, handleActions } from "redux-actions";
 import createRequestSaga, {
-  createRequestActionTypes,
+   createRequestActionTypes,
 } from "../lib/createRequestSaga";
 import * as postsAPI from "../lib/api/posts";
 import { takeLatest } from "redux-saga/effects";
 
 // 다음버튼
-const [NEXT_PAGE] = "posts/NEXT_PAGE";
-const [PREV_PAGE] = "post/PREV_PAGE";
+const NEXT_PAGE = "posts/NEXT_PAGE";
+const PREV_PAGE = "post/PREV_PAGE";
 
 // 게시판 목록 불러오기
 const [
-  READ_BOAD,
-  READ_BOAD_SUCCESS,
-  READ_BOAD_FAILURE,
+   READ_BOAD,
+   READ_BOAD_SUCCESS,
+   READ_BOAD_FAILURE,
 ] = createRequestActionTypes("posts/READ_BOARD");
 
 // 글 목록 불러오기
 const [
-  LIST_POSTS,
-  LIST_POSTS_SUCCESS,
-  LIST_POSTS_FAILURE,
+   LIST_POSTS,
+   LIST_POSTS_SUCCESS,
+   LIST_POSTS_FAILURE,
 ] = createRequestActionTypes("posts/LIST_POSTS");
 
 const TOGGLE_MENU = "posts/TOGGLE/MENU";
@@ -33,9 +33,9 @@ export const nextPage = createAction(NEXT_PAGE);
 export const prevPage = createAction(PREV_PAGE);
 export const readBoard = createAction(READ_BOAD);
 export const listPosts = createAction(LIST_POSTS, ({ id, start, end }) => ({
-  id,
-  start: start,
-  end: end,
+   id,
+   start,
+   end,
 }));
 
 //Saga 만들어주기
@@ -43,59 +43,51 @@ export const listPosts = createAction(LIST_POSTS, ({ id, start, end }) => ({
 const listPostsSaga = createRequestSaga(LIST_POSTS, postsAPI.readPost);
 const readBoardSaga = createRequestSaga(READ_BOAD, postsAPI.getBoard);
 export function* postsSaga() {
-  yield takeLatest(LIST_POSTS, listPostsSaga);
-  yield takeLatest(READ_BOAD, readBoardSaga);
+   yield takeLatest(LIST_POSTS, listPostsSaga);
+   yield takeLatest(READ_BOAD, readBoardSaga);
 }
 
 const initialState = {
-  boards: null,
-  posts: null,
-  data: null,
-  postsdata: null,
-  error: null,
-  start: 1,
-  end: 10,
-  lastPage: 1,
-  toggle: false,
+   boards: null,
+   posts: null,
+   data: null,
+   postsdata: null,
+   error: null,
+   start: 1,
+   end: 10,
+   lastPage: 1,
+   toggle: false,
 };
 
 const posts = handleActions(
-  {
-    [NEXT_PAGE]: (state) => ({
-      ...state,
-      start: state.start + 1,
-    }),
-    [PREV_PAGE]: (state) => ({
-      ...state,
-      end: state.end - 1,
-    }),
-    [LIST_POSTS_SUCCESS]: (state, { payload: posts }) => ({
-      ...state,
-      postsdata: posts.data,
-      posts,
-    }),
-    [LIST_POSTS_FAILURE]: (state, { payload: error }) => ({
-      ...state,
-      error,
-    }),
-    [READ_BOAD_SUCCESS]: (state, { payload: data, meta: response }) => ({
-      ...state,
-      data,
-      boards: data.data,
-      lastPage: parseInt(response.headers["last-page"], 10), // 문자열을 숫자로 변환
-    }),
-    // (data = posts.data)
-    // console.log(data)
-    [READ_BOAD_FAILURE]: (state, { payload: error }) => ({
-      ...state,
-      error,
-    }),
-    [TOGGLE_MENU]: (state, { payload: toggle }) => ({
-      ...state,
-      toggle: !toggle,
-    }),
-  },
-  initialState
+   {
+      [LIST_POSTS_SUCCESS]: (state, { payload: posts }) => ({
+         ...state,
+         postsdata: posts.data,
+         posts,
+      }),
+      [LIST_POSTS_FAILURE]: (state, { payload: error }) => ({
+         ...state,
+         error,
+      }),
+      [READ_BOAD_SUCCESS]: (state, { payload: data, meta: response }) => ({
+         ...state,
+         data,
+         boards: data.data,
+         lastPage: parseInt(response.headers["last-page"], 10), // 문자열을 숫자로 변환
+      }),
+      // (data = posts.data)
+      // console.log(data)
+      [READ_BOAD_FAILURE]: (state, { payload: error }) => ({
+         ...state,
+         error,
+      }),
+      [TOGGLE_MENU]: (state, { payload: toggle }) => ({
+         ...state,
+         toggle: !toggle,
+      }),
+   },
+   initialState
 );
 
 export default posts;
