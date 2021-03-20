@@ -34,6 +34,12 @@ const PostListContainer = ({ match }) => {
     localStorage.setItem("end", 10);
     start = 1;
     end = 10;
+  } else if (!start) {
+    localStorage.setItem("start", 0);
+    start = 1;
+  } else if (!end) {
+    localStorage.setItem("end", 10);
+    end = 10;
   } else {
     start = start.toString().replace(/"/g, "");
     end = end.toString().replace(/"/g, "");
