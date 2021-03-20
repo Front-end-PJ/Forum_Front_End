@@ -179,6 +179,12 @@ const Headers = ({ user, onLogout, boards }) => {
   } else {
     boards_data = JSON.parse(localStorage.getItem("boards"));
   }
+  function onClick() {
+    localStorage.setItem("start", 0);
+    localStorage.setItem("end", 10);
+    console.log("askldjflasd;kf");
+  }
+  let id = 1;
   return (
     <HaderBlock>
       <Wrapper className="clearfix">
@@ -195,7 +201,8 @@ const Headers = ({ user, onLogout, boards }) => {
               <div className="main-menu">
                 {boards_data.map((board) => (
                   <Link
-                    to={`/board/${board.pk}`}
+                    onClick={onClick}
+                    to={`/board/${board.pk}/page=${id}`}
                     className="myLink"
                     key={board.pk}
                     rep

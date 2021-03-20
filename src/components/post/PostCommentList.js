@@ -76,7 +76,7 @@ const PostCommentList = ({
   const onChange = (e) => {
     setText(e.target.value);
   };
-  console.log(number);
+
 
   return (
     <PostViewerBlock>

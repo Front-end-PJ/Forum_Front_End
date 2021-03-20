@@ -102,7 +102,7 @@ const PostCommentToggle = ({
   if (answer_reply_length !== 0) {
     recommnet_datas = comment.recomment_data;
   }
-  console.log("redatais", recommnet_datas);
+
   // const { id } = comment.recomments;
   const [set, onSet] = useState(false);
   const [setRe, onSetRe] = useState(false);

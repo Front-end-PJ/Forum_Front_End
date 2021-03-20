@@ -82,7 +82,7 @@ const PostCommentItem = ({
   const { writeAt, content } = comment.fields;
   const { username } = comment.fields.author.fields;
   const { pk } = comment;
-  console.log(comment.answer_reply_length);
+
 
   //  const { content } = recommentList.fields;
 

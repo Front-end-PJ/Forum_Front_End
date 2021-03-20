@@ -8,27 +8,22 @@ import PostPage from "./pages/PostPage";
 import { Helmet } from "react-helmet-async";
 
 function App() {
-   return (
-      <>
-         <Helmet>
-            <title>REACTERS</title>
-         </Helmet>
-         <Route
-            component={PostListPage}
-            path={[
-               "/board/:postId",
-               "/board",
-               "/",
-               "/board/:postId/page=:postId",
-            ]}
-            exact
-         />
-         <Route component={LoginPage} path="/login" />
-         <Route component={RegisterPage} path="/register" />
-         <Route component={WritePage} path="/write" />
-         <Route component={PostPage} path="/board/post/:postId" />
-      </>
-   );
+  return (
+    <>
+      <Helmet>
+        <title>REACTERS</title>
+      </Helmet>
+      <Route
+        component={PostListPage}
+        path={["/board/:postId", "/board", "/", "/board/:boardId/page=:pageId"]}
+        exact
+      />
+      <Route component={LoginPage} path="/login" />
+      <Route component={RegisterPage} path="/register" />
+      <Route component={WritePage} path="/write" />
+      <Route component={PostPage} path="/board/post/:postId" />
+    </>
+  );
 }
 
 export default App;
