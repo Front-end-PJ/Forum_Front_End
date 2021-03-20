@@ -190,7 +190,7 @@ const Headers = ({ user, onLogout, boards }) => {
       <Wrapper className="clearfix">
         <MenuGroup className="float--left">
           <Link style={{ display: "flex" }} to="/" className="logo" replace>
-            REACTERS
+            C&D
           </Link>
           <GiHamburgerMenu
             onClick={toggleElements}
